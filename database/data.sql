@@ -11,5 +11,8 @@
   insert into "events" ("title", "locationName", "locationAddress", "date")
       values ('Groove Garden', '701 Nightclub', '123 Main St., Santa Ana, Ca', '2023-10-14');
 
+  insert into "events" ("title", "locationName", "locationAddress", "date")
+      values ('New Event', 'Mission Bar', '456 Main St., Santa Ana, Ca', '2023-10-21');
+
   insert into "artists" ("name")
       values ('melloMarsh')
