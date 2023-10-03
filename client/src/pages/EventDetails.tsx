@@ -9,7 +9,7 @@ type Scope = 'tickets' | 'details' | 'checkout';
 
 export default function EventDetails() {
   const params = useParams();
-  const eventId = params.eventId;
+  const eventId = Number(params.eventId);
   const [event, setEvent] = useState<Event>();
   const [scope, setScope] = useState<Scope>('tickets');
   const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +17,7 @@ export default function EventDetails() {
   const [quantity, setQuantity] = useState<number>(1);
 
   useEffect(() => {
-    async function loadEvent(eventId: string) {
+    async function loadEvent(eventId: number) {
       try {
         const fetchedEvent = await fetchEvent(eventId);
         setEvent(fetchedEvent);

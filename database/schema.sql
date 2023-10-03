@@ -10,8 +10,7 @@ CREATE TABLE "users" (
   "userId" serial PRIMARY KEY,
   "email" text,
   "phoneNumber" text,
-  "firstName" text,
-  "lastName" text,
+  "username" text,
   "createdAt" timestamptz,
   "hashedPassword" text
 );
@@ -35,7 +34,8 @@ CREATE TABLE "artists" (
 
 CREATE TABLE "userEvents" (
   "userId" integer,
-  "eventId" integer
+  "eventId" integer,
+  "ticketCount" integer
 );
 
 CREATE TABLE "artistEvents" (

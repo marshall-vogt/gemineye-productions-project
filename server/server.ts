@@ -2,7 +2,9 @@
 import 'dotenv/config';
 import express from 'express';
 import pg from 'pg';
-import { ClientError, errorMiddleware } from './lib/index.js';
+import { ClientError, errorMiddleware, authMiddleware } from './lib/index.js';
+import argon2 from 'argon2';
+import jwt from 'jsonwebtoken';
 
 const connectionString =
   process.env.DATABASE_URL ||
@@ -15,6 +17,9 @@ const db = new pg.Pool({
   },
 });
 
+const hashKey = process.env.TOKEN_SECRET;
+if (!hashKey) throw new Error('TOKEN_SECRET not found in .env');
+
 const app = express();
 
 // Create paths for static directories
@@ -25,6 +30,8 @@ app.use(express.static(reactStaticDir));
 // Static directory for file uploads server/public/
 app.use(express.static(uploadsStaticDir));
 app.use(express.json());
+
+// Get all events
 
 app.get('/api/events', async (req, res, next) => {
   try {
@@ -38,6 +45,8 @@ app.get('/api/events', async (req, res, next) => {
     next(err);
   }
 });
+
+// Get individual event
 
 app.get('/api/events/:eventId', async (req, res, next) => {
   try {
@@ -53,9 +62,128 @@ app.get('/api/events/:eventId', async (req, res, next) => {
     const params = [eventId];
     const result = await db.query<Event>(sql, params);
     if (!result.rows[0]) {
-      throw new ClientError(404, `cannot find product with eventId ${eventId}`);
+      throw new ClientError(404, `cannot find event with eventId ${eventId}`);
     }
     res.json(result.rows[0]);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Get events purchased by user
+
+app.get('/api/userEvents/:userId', authMiddleware, async (req, res, next) => {
+  try {
+    const userId = Number(req.params.userId);
+    if (!userId) {
+      throw new ClientError(400, 'userId must be a positive integer');
+    }
+    const sql = `
+      select *
+        from "userEvents"
+        join "events" using ("eventId")
+        where "userId" = $1;
+    `;
+    const params = [userId];
+    const result = await db.query<Event>(sql, params);
+    if (!result.rows[0]) {
+      throw new ClientError(404, `cannot find event from userId ${userId}`);
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Purchase event
+
+app.post(
+  '/api/userEvents/:eventId/:userId/:ticketCount',
+  authMiddleware,
+  async (req, res, next) => {
+    try {
+      const eventId = Number(req.params.eventId);
+      if (!eventId) {
+        throw new ClientError(400, 'eventId must be a positive integer');
+      }
+      const userId = Number(req.params.userId);
+      if (!userId) {
+        throw new ClientError(400, 'userId must be a positive integer');
+      }
+      const ticketCount = Number(req.params.ticketCount);
+      if (!ticketCount) {
+        throw new ClientError(400, 'ticketCount must be a positive integer');
+      }
+      const sql = `
+      insert into "userEvents" ("eventId", "userId", "ticketCount")
+        values ($1, $2, $3)
+        returning *;
+    `;
+      const params = [eventId, userId, ticketCount];
+      const result = await db.query(sql, params);
+      res.status(201).json(result.rows[0]);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+// Sign-up
+
+app.post('/api/users/sign-up', async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      throw new ClientError(400, 'username and password are required fields');
+    }
+    const hashedPassword = await argon2.hash(password);
+    const sql = `
+      insert into "users" ("username", "hashedPassword")
+        values ($1, $2)
+        returning "userId", "username", "createdAt";
+    `;
+    const params = [username, hashedPassword];
+    const result = await db.query(sql, params);
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Sign-in
+
+app.post('/api/users/sign-in', async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    const enteredPassword = password;
+    if (!username || !password) {
+      throw new ClientError(401, 'invalid login');
+    }
+
+    const sql = `
+    select "userId",
+            "hashedPassword"
+        from "users"
+        where "username" = $1;
+            `;
+    const result = await db.query(sql, [username]);
+    const resultRow = result.rows[0];
+    if (!resultRow) {
+      throw new ClientError(401, `Entry with username ${username} not found`);
+    }
+    const isMatching = await argon2.verify(
+      resultRow.hashedPassword,
+      enteredPassword
+    );
+    if (!isMatching) {
+      throw new ClientError(401, `Invalid login: password did not match`);
+    }
+    const payload = {
+      userId: resultRow.userId,
+      username,
+    };
+    const token = jwt.sign(payload, hashKey);
+    res.status(200).json({ token, user: payload });
   } catch (err) {
     next(err);
   }
