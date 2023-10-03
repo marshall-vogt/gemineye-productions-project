@@ -26,8 +26,44 @@ app.use(express.static(reactStaticDir));
 app.use(express.static(uploadsStaticDir));
 app.use(express.json());
 
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello, World!' });
+app.get('/api/events', async (req, res, next) => {
+  try {
+    const sql = `
+      select *
+        from "events"
+    `;
+    const result = await db.query(sql);
+    res.json(result.rows);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get('/api/events/:eventId', async (req, res, next) => {
+  try {
+    const eventId = Number(req.params.eventId);
+    if (!eventId) {
+      throw new ClientError(400, 'eventId must be a positive integer');
+    }
+    const sql = `
+      select "eventId",
+            "date",
+            "eventFlyer",
+            "locationAddress",
+            "locationName",
+            "title"
+        from "events"
+        where "eventId" = $1
+    `;
+    const params = [eventId];
+    const result = await db.query<Event>(sql, params);
+    if (!result.rows[0]) {
+      throw new ClientError(404, `cannot find product with eventId ${eventId}`);
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    next(err);
+  }
 });
 
 /**

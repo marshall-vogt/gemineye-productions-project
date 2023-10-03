@@ -1,0 +1,19 @@
+.event-details-image {
+  width: 50vw;
+  height: auto;
+  scale: 0.8;
+}
+
+.event-image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.select-tickets {
+  display: flex;
+}
+
+.scope {
+  display: flex;
+}
