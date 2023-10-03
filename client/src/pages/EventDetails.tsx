@@ -3,8 +3,9 @@ import { fetchEvent } from '../data';
 import { useEffect, useState } from 'react';
 import { Event } from '../data';
 import './EventDetails.css';
+import { Link } from 'react-router-dom';
 
-type Scope = 'tickets' | 'details';
+type Scope = 'tickets' | 'details' | 'checkout';
 
 export default function EventDetails() {
   const params = useParams();
@@ -13,12 +14,13 @@ export default function EventDetails() {
   const [scope, setScope] = useState<Scope>('tickets');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<unknown>();
+  const [quantity, setQuantity] = useState<number>(1);
 
   useEffect(() => {
     async function loadEvent(eventId: string) {
       try {
-        const event = await fetchEvent(eventId);
-        setEvent(event);
+        const fetchedEvent = await fetchEvent(eventId);
+        setEvent(fetchedEvent);
       } catch (err) {
         setError(err);
       } finally {
@@ -40,8 +42,11 @@ export default function EventDetails() {
       </div>
     );
   if (!event) return null;
-  const { date, title, locationName, eventFlyer, locationAddress } = event;
-  const newDate = new Date(date);
+  const { date, title, locationName, eventFlyer, locationAddress, cost } =
+    event;
+  const newDate = new Date(date).toDateString();
+  const subtotal = quantity * cost;
+  const fixedSubtotal = subtotal.toFixed(2);
 
   return (
     <>
@@ -53,49 +58,90 @@ export default function EventDetails() {
         />
       </div>
       <div>
-        <div>
-          GEMINEYE presents {title} at {locationName}
-        </div>
-        <div>{newDate.toDateString()}</div>
-        <div>
-          <div className="scope">
-            <button onClick={() => setScope('tickets')}>Tickets</button>
-            <button onClick={() => setScope('details')}>Details</button>
-          </div>
-          <div>
-            {scope === 'tickets' && (
-              <>
-                <div className="select-tickets">
-                  <select>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                  </select>
-                  <span>General Admission</span>
-                  <span>$15.00</span>
-                </div>
-                <button>Purchase</button>
-              </>
-            )}
-            {scope === 'details' && (
-              <>
-                <div>Event Description</div>
-                <div>Doors Open: 8:00PM 21+</div>
-                <div>Venue Location</div>
-                <div>
-                  <div>{locationName}</div>
-                  <div>{locationAddress}</div>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
+        {scope !== 'checkout' && (
+          <>
+            <div>
+              GEMINEYE presents {title} at {locationName}
+            </div>
+            <div>{newDate}</div>
+            <div>
+              <div className="scope">
+                <button onClick={() => setScope('tickets')}>Tickets</button>
+                <button onClick={() => setScope('details')}>Details</button>
+              </div>
+
+              <div>
+                {scope === 'tickets' && (
+                  <>
+                    <div className="select-tickets">
+                      <select
+                        onChange={(e) => setQuantity(Number(e.target.value))}>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                      </select>
+                      <span>General Admission</span>
+                      <span>$15.00</span>
+                    </div>
+                    <button onClick={() => setScope('checkout')}>
+                      Purchase
+                    </button>
+                  </>
+                )}
+                {scope === 'details' && (
+                  <>
+                    <div>Event Description</div>
+                    <div>Doors Open: 8:00PM 21+</div>
+                    <div>Venue Location</div>
+                    <div>
+                      <div>{locationName}</div>
+                      <div>{locationAddress}</div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </>
+        )}
+        {scope === 'checkout' && (
+          <>
+            <div>Your Tickets</div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Qty</th>
+                  <th>Tickets</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    GEMINEYE presents {title} at {locationName} {newDate}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{quantity}</td>
+                  <td>General Admission @ $15.00</td>
+                  <td>${fixedSubtotal}</td>
+                </tr>
+              </tbody>
+            </table>
+            <button disabled>
+              Grand Total: ${(subtotal + 0.08 * subtotal).toFixed(2)}
+            </button>
+            <button>Add Another Event</button>
+            <Link to="/checkout">
+              <button>Checkout</button>
+            </Link>
+          </>
+        )}
       </div>
     </>
   );

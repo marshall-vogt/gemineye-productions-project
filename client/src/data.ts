@@ -5,6 +5,7 @@ export type Event = {
   locationAddress: string;
   locationName: string;
   title: string;
+  cost: number;
 };
 
 export async function readEvents(): Promise<Event[]> {
