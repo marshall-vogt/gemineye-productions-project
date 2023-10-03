@@ -6,16 +6,20 @@ export default function NavBar() {
     <div>
       <div className="navbar">
         <nav>
-          <h2>Gemineye Productions</h2>
-          <button>
-            <Link to="/">Home</Link>
-          </button>
-          <button>
-            <Link to="/events">Events</Link>
-          </button>
+          <div className="logo">
+            <h2>Gemineye Productions</h2>
+          </div>
+          <div className="links">
+            <Link to="/">
+              <button className="navbar-button">Home</button>
+            </Link>
+            <Link to="/events">
+              <button className="navbar-button">Events</button>
+            </Link>
+          </div>
         </nav>
-        <Outlet />
       </div>
+      <Outlet />
     </div>
   );
 }

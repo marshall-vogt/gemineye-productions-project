@@ -13,3 +13,9 @@ export async function readEvents(): Promise<Event[]> {
   const entryList = await response.json();
   return entryList;
 }
+
+export async function fetchEvent(eventId: string): Promise<Event> {
+  const res = await fetch(`/api/events/${eventId}`);
+  if (!res.ok) throw new Error(`fetch Error ${res.status}`);
+  return await res.json();
+}

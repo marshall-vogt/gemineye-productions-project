@@ -39,6 +39,33 @@ app.get('/api/events', async (req, res, next) => {
   }
 });
 
+app.get('/api/events/:eventId', async (req, res, next) => {
+  try {
+    const eventId = Number(req.params.eventId);
+    if (!eventId) {
+      throw new ClientError(400, 'eventId must be a positive integer');
+    }
+    const sql = `
+      select "eventId",
+            "date",
+            "eventFlyer",
+            "locationAddress",
+            "locationName",
+            "title"
+        from "events"
+        where "eventId" = $1
+    `;
+    const params = [eventId];
+    const result = await db.query<Event>(sql, params);
+    if (!result.rows[0]) {
+      throw new ClientError(404, `cannot find product with eventId ${eventId}`);
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    next(err);
+  }
+});
+
 /**
  * Serves React's index.html if no api route matches.
  *

@@ -10,3 +10,14 @@
 ul {
   list-style-type: none;
 }
+
+img {
+  height: auto;
+  width: 100vw;
+}
+
+.imageDiv {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}

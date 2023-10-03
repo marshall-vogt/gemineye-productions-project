@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import EventsPage from './pages/EventsPage';
 import { useState, useEffect } from 'react';
 import { readEvents, Event } from './data';
+import EventDetails from './pages/EventDetails';
 
 export default function App() {
   const [upcomingEvents, setUpcomingEvents] = useState<Event[] | undefined>();
@@ -11,9 +12,6 @@ export default function App() {
     async function readServerData() {
       try {
         const resp = await readEvents();
-
-        console.log('serverData:', resp);
-
         setUpcomingEvents(resp);
       } catch (error) {
         console.error(error);
@@ -21,7 +19,7 @@ export default function App() {
     }
 
     readServerData();
-  }, [setUpcomingEvents]);
+  }, []);
 
   return (
     <Routes>
@@ -31,6 +29,7 @@ export default function App() {
           path="/events"
           element={<EventsPage upcomingEvents={upcomingEvents} />}
         />
+        <Route path="/events/:eventId" element={<EventDetails />} />
       </Route>
     </Routes>
   );
