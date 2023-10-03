@@ -16,6 +16,12 @@ export default function NavBar() {
             <Link to="/events">
               <button className="navbar-button">Events</button>
             </Link>
+            <Link to="/sign-up">
+              <button className="navbar-button">Sign-Up</button>
+            </Link>
+            <Link to="/sign-in">
+              <button className="navbar-button">Sign-In</button>
+            </Link>
           </div>
         </nav>
       </div>

@@ -4,9 +4,9 @@
 -- EXAMPLE:
 
   insert into "users"
-    ("email", "phoneNumber", "firstName", "lastName")
+    ("email", "phoneNumber", "username")
     values
-      ('example@gmail.com', '555-555-5555', 'marshall', 'vogt');
+      ('example@gmail.com', '555-555-5555', 'vogt_marshall');
 
   insert into "events" ("title", "locationName", "locationAddress", "date", "eventFlyer", "cost")
       values ('Groove Garden', '701 Nightclub', '123 Main St., Santa Ana, Ca', '2023-10-14', '/images/flyer1.jpg', '15');
@@ -15,4 +15,7 @@
       values ('New Event', 'Mission Bar', '456 Main St., Santa Ana, Ca', '2023-10-21', '/images/flyer1.jpg', '15');
 
   insert into "artists" ("name")
-      values ('melloMarsh')
+      values ('melloMarsh');
+
+  insert into "userEvents" ("userId", "eventId", "ticketCount")
+      values ('1', '1', '2');

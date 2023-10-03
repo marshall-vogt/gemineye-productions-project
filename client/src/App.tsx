@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react';
 import { readEvents, Event } from './data';
 import EventDetails from './pages/EventDetails';
 import Checkout from './pages/Checkout';
+import RegistrationForm from './pages/RegistrationPage';
+import SignInForm from './pages/SignInForm';
 
 export default function App() {
   const [upcomingEvents, setUpcomingEvents] = useState<Event[] | undefined>();
@@ -32,6 +34,8 @@ export default function App() {
         />
         <Route path="/events/:eventId" element={<EventDetails />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/sign-up" element={<RegistrationForm />} />
+        <Route path="/sign-in" element={<SignInForm />} />
       </Route>
     </Routes>
   );
