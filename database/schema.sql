@@ -23,7 +23,8 @@ CREATE TABLE "events" (
   "locationName" text,
   "locationAddress" text,
   "date" date,
-  "eventFlyer" text
+  "eventFlyer" text,
+  "cost" integer
 );
 
 CREATE TABLE "artists" (

@@ -46,12 +46,7 @@ app.get('/api/events/:eventId', async (req, res, next) => {
       throw new ClientError(400, 'eventId must be a positive integer');
     }
     const sql = `
-      select "eventId",
-            "date",
-            "eventFlyer",
-            "locationAddress",
-            "locationName",
-            "title"
+      select *
         from "events"
         where "eventId" = $1
     `;
