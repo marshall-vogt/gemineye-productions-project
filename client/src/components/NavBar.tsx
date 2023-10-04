@@ -21,9 +21,14 @@ export default function NavBar() {
               <button className="navbar-button">Events</button>
             </Link>
             {user && (
-              <button className="navbar-button" onClick={handleSignOut}>
-                Sign-Out
-              </button>
+              <>
+                <Link to="/user-tickets">
+                  <button>My Tickets</button>
+                </Link>
+                <button className="navbar-button" onClick={handleSignOut}>
+                  Sign-Out
+                </button>
+              </>
             )}
             {!user && (
               <>

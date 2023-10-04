@@ -10,7 +10,7 @@ CREATE TABLE "users" (
   "userId" serial PRIMARY KEY,
   "email" text,
   "phoneNumber" text,
-  "username" text,
+  "username" text UNIQUE,
   "createdAt" timestamptz,
   "hashedPassword" text
 );
