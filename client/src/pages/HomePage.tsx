@@ -1,6 +1,6 @@
 import './HomePage.css';
 import HomePageEvents from '../components/HomePageEvents';
-import { Event } from '../data';
+import { Event } from '../lib/data';
 
 type Props = {
   upcomingEvents: Event[] | undefined;

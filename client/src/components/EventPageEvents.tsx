@@ -1,4 +1,4 @@
-import { Event } from '../data';
+import { Event } from '../lib/data';
 import { Link } from 'react-router-dom';
 
 type Props = {

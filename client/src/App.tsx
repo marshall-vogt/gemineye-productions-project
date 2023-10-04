@@ -1,9 +1,9 @@
 import HomePage from './pages/HomePage';
 import NavBar from './components/NavBar';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import EventsPage from './pages/EventsPage';
 import { useState, useEffect } from 'react';
-import { readEvents, Event } from './data';
+import { readEvents, Event } from './lib/data';
 import EventDetails from './pages/EventDetails';
 import Checkout from './pages/Checkout';
 import AuthPage from './pages/AuthPage';
@@ -18,6 +18,7 @@ export default function App() {
   const [user, setUser] = useState<User>();
   const [token, setToken] = useState<string>();
   const [isAuthorizing, setIsAuthorizing] = useState(true);
+  const navigate = useNavigate();
 
   // Load upcoming events for viewing
   useEffect(() => {
@@ -57,8 +58,8 @@ export default function App() {
     localStorage.removeItem(tokenKey);
     setUser(undefined);
     setToken(undefined);
+    navigate('/');
   }
-
   const contextValue = { user, token, handleSignIn, handleSignOut };
 
   return (
