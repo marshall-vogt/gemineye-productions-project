@@ -10,6 +10,7 @@ import AuthPage from './pages/AuthPage';
 import AppContext from './components/AppContext';
 import { Auth, User } from './lib';
 import NotFound from './pages/NotFoundPage';
+import UserTickets from './pages/UserTickets';
 
 const tokenKey = 'react-context-jwt';
 
@@ -75,6 +76,7 @@ export default function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/sign-up" element={<AuthPage action="sign-up" />} />
           <Route path="/sign-in" element={<AuthPage action="sign-in" />} />
+          <Route path="/user-tickets" element={<UserTickets />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
