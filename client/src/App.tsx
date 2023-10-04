@@ -15,7 +15,7 @@ import UserTickets from './pages/UserTickets';
 const tokenKey = 'react-context-jwt';
 
 export default function App() {
-  const [upcomingEvents, setUpcomingEvents] = useState<Event[] | undefined>();
+  const [upcomingEvents, setUpcomingEvents] = useState<Event[]>();
   const [user, setUser] = useState<User>();
   const [token, setToken] = useState<string>();
   const [isAuthorizing, setIsAuthorizing] = useState(true);

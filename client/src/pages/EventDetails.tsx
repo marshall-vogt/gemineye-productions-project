@@ -1,10 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { fetchEvent, purchaseTickets } from '../lib/data';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Event } from '../lib/data';
 import './EventDetails.css';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
 import AppContext from '../components/AppContext';
 
 type Scope = 'tickets' | 'details' | 'checkout';

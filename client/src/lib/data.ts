@@ -1,4 +1,5 @@
 const tokenKey = 'react-context-jwt';
+import { Ticket } from '../pages/UserTickets';
 
 export type Event = {
   date: string;
@@ -23,14 +24,15 @@ export async function fetchEvent(eventId: number): Promise<Event> {
   return await res.json();
 }
 
-export async function fetchTickets(userId: number): Promise<Event> {
+export async function fetchTickets(userId: number): Promise<Ticket> {
+  const auth = localStorage.getItem(tokenKey);
+  const a = JSON.parse(auth as string);
   const req = {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      Authorization: `Bearer ${a.token}`,
     },
-    body: JSON.stringify(userId),
   };
   const res = await fetch(`/api/userEvents/${userId}`, req);
   if (!res.ok) throw new Error(`fetch Error ${res.status}`);
