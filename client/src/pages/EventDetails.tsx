@@ -1,9 +1,11 @@
 import { useParams } from 'react-router-dom';
-import { fetchEvent } from '../data';
+import { fetchEvent, purchaseTickets } from '../lib/data';
 import { useEffect, useState } from 'react';
-import { Event } from '../data';
+import { Event } from '../lib/data';
 import './EventDetails.css';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import AppContext from '../components/AppContext';
 
 type Scope = 'tickets' | 'details' | 'checkout';
 
@@ -15,6 +17,28 @@ export default function EventDetails() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<unknown>();
   const [quantity, setQuantity] = useState<number>(1);
+  const { user } = useContext(AppContext);
+  const navigate = useNavigate();
+  const userId = user?.userId;
+
+  function handlePurchase() {
+    user
+      ? setScope('checkout')
+      : alert('Must be logged in to purchase tickets');
+  }
+
+  async function handleCheckout(
+    eventId: number,
+    userId: number,
+    ticketCount: number
+  ) {
+    try {
+      await purchaseTickets(eventId, userId, ticketCount);
+      navigate('/checkout');
+    } catch (err) {
+      setError(err);
+    }
+  }
 
   useEffect(() => {
     async function loadEvent(eventId: number) {
@@ -89,9 +113,7 @@ export default function EventDetails() {
                       <span>General Admission</span>
                       <span>$15.00</span>
                     </div>
-                    <button onClick={() => setScope('checkout')}>
-                      Purchase
-                    </button>
+                    <button onClick={handlePurchase}>Purchase</button>
                   </>
                 )}
                 {scope === 'details' && (
@@ -137,9 +159,12 @@ export default function EventDetails() {
               Grand Total: ${(subtotal + 0.08 * subtotal).toFixed(2)}
             </button>
             <button>Add Another Event</button>
-            <Link to="/checkout">
-              <button>Checkout</button>
-            </Link>
+            <button
+              onClick={() =>
+                handleCheckout(eventId, userId as number, quantity)
+              }>
+              Checkout
+            </button>
           </>
         )}
       </div>

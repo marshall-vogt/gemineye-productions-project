@@ -1,3 +1,5 @@
+const tokenKey = 'react-context-jwt';
+
 export type Event = {
   date: string;
   eventFlyer?: string;
@@ -26,7 +28,7 @@ export async function fetchTickets(userId: number): Promise<Event> {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
     body: JSON.stringify(userId),
   };
@@ -36,19 +38,24 @@ export async function fetchTickets(userId: number): Promise<Event> {
 }
 
 export async function purchaseTickets(
-  userId: number,
   eventId: number,
+  userId: number,
   ticketCount: number
 ): Promise<Event> {
+  const auth = localStorage.getItem(tokenKey);
+  const a = JSON.parse(auth as string);
   const req = {
-    method: 'GET',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      Authorization: `Bearer ${a.token}`,
     },
-    body: JSON.stringify({ userId, eventId, ticketCount }),
+    body: JSON.stringify({ eventId, userId, ticketCount }),
   };
-  const res = await fetch(`/api/userEvents/${userId}`, req);
+  const res = await fetch(
+    `/api/userEvents/${eventId}/${userId}/${ticketCount}`,
+    req
+  );
   if (!res.ok) throw new Error(`fetch Error ${res.status}`);
   return await res.json();
 }
