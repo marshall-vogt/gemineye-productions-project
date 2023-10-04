@@ -79,7 +79,13 @@ app.get('/api/userEvents/:userId', authMiddleware, async (req, res, next) => {
       throw new ClientError(400, 'userId must be a positive integer');
     }
     const sql = `
-      select *
+      select "cost",
+              "date",
+              "eventFlyer",
+              "locationAddress",
+              "locationName",
+              "ticketCount",
+              "title"
         from "userEvents"
         join "events" using ("eventId")
         where "userId" = $1;
@@ -169,7 +175,7 @@ app.post('/api/users/sign-in', async (req, res, next) => {
     const result = await db.query(sql, [username]);
     const resultRow = result.rows[0];
     if (!resultRow) {
-      throw new ClientError(401, `Entry with username ${username} not found`);
+      throw new ClientError(401, `Incorrect username or password`);
     }
     const isMatching = await argon2.verify(
       resultRow.hashedPassword,
