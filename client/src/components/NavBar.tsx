@@ -1,7 +1,11 @@
 import { Outlet, Link } from 'react-router-dom';
 import './NavBar.css';
+import { useContext } from 'react';
+import AppContext from './AppContext';
 
 export default function NavBar() {
+  const { user, handleSignOut } = useContext(AppContext);
+
   return (
     <div>
       <div className="navbar">
@@ -16,12 +20,21 @@ export default function NavBar() {
             <Link to="/events">
               <button className="navbar-button">Events</button>
             </Link>
-            <Link to="/sign-up">
-              <button className="navbar-button">Sign-Up</button>
-            </Link>
-            <Link to="/sign-in">
-              <button className="navbar-button">Sign-In</button>
-            </Link>
+            {user && (
+              <button className="navbar-button" onClick={handleSignOut}>
+                Sign-Out
+              </button>
+            )}
+            {!user && (
+              <>
+                <Link to="/sign-in">
+                  <button className="navbar-button">Sign-In</button>
+                </Link>
+                <Link to="/sign-up">
+                  <button className="navbar-button">Sign-Up</button>
+                </Link>
+              </>
+            )}
           </div>
         </nav>
       </div>
