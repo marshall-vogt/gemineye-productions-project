@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import AppContext from '../components/AppContext';
 import { fetchTickets } from '../lib/data';
+import './UserTickets.css';
 
 export type Ticket = {
   cost: number;
@@ -49,14 +50,58 @@ export default function UserTickets() {
     locationName,
     eventFlyer,
     locationAddress,
-    cost,
     ticketCount,
   } = ticketsPurchased;
+  const newDate = new Date(date).toDateString();
+
+  const renderTickets = () => {
+    const ticketList = [];
+    for (let i = 0; i < ticketCount; i++) {
+      ticketList.push(
+        <tr key={i}>
+          <td>{i + 1}</td>
+          <td>{newDate}</td>
+          <td>{title}</td>
+          <td>
+            {locationName}
+            <br />
+            {locationAddress}
+          </td>
+          <td>
+            {Math.floor(Math.random() * 1000)}.
+            {Math.floor(Math.random() * 1000)}.
+            {Math.floor(Math.random() * 1000)}
+          </td>
+        </tr>
+      );
+    }
+    return ticketList;
+  };
+
   return (
     <div>
-      {!ticketsPurchased && 'Tickets not found'}
-      {date}, {title}, {locationAddress}, {locationName}, {eventFlyer}, {cost},
-      {ticketCount}
+      {!ticketsPurchased ? (
+        'Tickets not found'
+      ) : (
+        <>
+          <img src={eventFlyer} alt="event-image" />
+          <table>
+            <thead>
+              <tr>
+                <td>My Tickets</td>
+              </tr>
+              <tr>
+                <th>Ticket Number</th>
+                <th>Date</th>
+                <th>Event</th>
+                <th>Location</th>
+                <th>Ticket ID</th>
+              </tr>
+            </thead>
+            <tbody>{renderTickets()}</tbody>
+          </table>
+        </>
+      )}
     </div>
   );
 }
