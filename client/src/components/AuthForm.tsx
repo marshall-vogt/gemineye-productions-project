@@ -20,13 +20,9 @@ export default function AuthForm({ action, onSignIn }: Props) {
       navigate('/sign-in');
     }
     async function handleSignIn(username: string, password: string) {
-      try {
-        const auth = await signIn(username, password);
-        if (auth.user && auth.token) {
-          onSignIn(auth);
-        }
-      } catch (err) {
-        alert('Username and password do not match');
+      const auth = await signIn(username, password);
+      if (auth.user && auth.token) {
+        onSignIn(auth);
       }
     }
     event.preventDefault();
@@ -37,9 +33,9 @@ export default function AuthForm({ action, onSignIn }: Props) {
     const password = entries.password as string;
     try {
       if (action === 'sign-up') {
-        handleSignUp(username, password);
+        await handleSignUp(username, password);
       } else {
-        handleSignIn(username, password);
+        await handleSignIn(username, password);
       }
     } catch (err) {
       setError(err);
@@ -74,7 +70,10 @@ export default function AuthForm({ action, onSignIn }: Props) {
       <>
         {error && (
           <div style={{ color: 'red' }}>
-            Error: {error instanceof Error ? error.message : 'Unknown Error'}
+            Error:{' '}
+            {error instanceof Error
+              ? error.message + ': Username or password do not match'
+              : 'Unknown Error'}
           </div>
         )}
       </>
