@@ -28,7 +28,7 @@ export default function App() {
         const resp = await readEvents();
         setUpcomingEvents(resp);
       } catch (error) {
-        console.error(error);
+        alert(error);
       }
     }
 

@@ -104,7 +104,7 @@ app.get('/api/userEvents/:userId', authMiddleware, async (req, res, next) => {
 // Purchase event
 
 app.post(
-  '/api/userEvents/:eventId/:userId/:ticketCount',
+  '/api/userEvents/:eventId/:userId',
   authMiddleware,
   async (req, res, next) => {
     try {
@@ -116,7 +116,7 @@ app.post(
       if (!userId) {
         throw new ClientError(400, 'userId must be a positive integer');
       }
-      const ticketCount = Number(req.params.ticketCount);
+      const ticketCount = Number(req.body.ticketCount);
       if (!ticketCount) {
         throw new ClientError(400, 'ticketCount must be a positive integer');
       }

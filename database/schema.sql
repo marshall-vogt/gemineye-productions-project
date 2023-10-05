@@ -11,14 +11,14 @@ CREATE TABLE "users" (
   "email" text,
   "phoneNumber" text,
   "username" text UNIQUE,
-  "createdAt" timestamptz,
+  "createdAt" timestamptz default now(),
   "hashedPassword" text
 );
 
 CREATE TABLE "events" (
   "eventId" serial PRIMARY KEY,
   "title" text,
-  "createdAt" timestamptz,
+  "createdAt" timestamptz default now(),
   "locationName" text,
   "locationAddress" text,
   "date" date,
@@ -29,13 +29,14 @@ CREATE TABLE "events" (
 CREATE TABLE "artists" (
   "artistId" serial PRIMARY KEY,
   "name" text,
-  "createdAt" timestamptz
+  "createdAt" timestamptz default now()
 );
 
 CREATE TABLE "userEvents" (
   "userId" integer,
   "eventId" integer,
-  "ticketCount" integer
+  "ticketCount" integer,
+  PRIMARY KEY ("userId", "eventId")
 );
 
 CREATE TABLE "artistEvents" (

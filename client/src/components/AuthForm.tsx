@@ -20,9 +20,13 @@ export default function AuthForm({ action, onSignIn }: Props) {
       navigate('/sign-in');
     }
     async function handleSignIn(username: string, password: string) {
-      const auth = await signIn(username, password);
-      if (auth.user && auth.token) {
-        onSignIn(auth);
+      try {
+        const auth = await signIn(username, password);
+        if (auth.user && auth.token) {
+          onSignIn(auth);
+        }
+      } catch (err) {
+        alert('Username and password do not match');
       }
     }
     event.preventDefault();

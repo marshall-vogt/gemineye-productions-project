@@ -52,12 +52,9 @@ export async function purchaseTickets(
       'Content-Type': 'application/json',
       Authorization: `Bearer ${a.token}`,
     },
-    body: JSON.stringify({ eventId, userId, ticketCount }),
+    body: JSON.stringify({ ticketCount }),
   };
-  const res = await fetch(
-    `/api/userEvents/${eventId}/${userId}/${ticketCount}`,
-    req
-  );
+  const res = await fetch(`/api/userEvents/${eventId}/${userId}`, req);
   if (!res.ok) throw new Error(`fetch Error ${res.status}`);
   return await res.json();
 }
