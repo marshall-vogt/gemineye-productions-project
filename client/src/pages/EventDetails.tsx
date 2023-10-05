@@ -5,6 +5,9 @@ import { Event } from '../lib/data';
 import './EventDetails.css';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../components/AppContext';
+import Checkout from '../components/Checkout';
+import Tickets from '../components/Tickets';
+import Details from '../components/Details';
 
 type Scope = 'tickets' | 'details' | 'checkout';
 
@@ -70,6 +73,15 @@ export default function EventDetails() {
   const newDate = new Date(date).toDateString();
   const subtotal = quantity * cost;
   const fixedSubtotal = subtotal.toFixed(2);
+  const checkoutProps = {
+    handleCheckout,
+    event,
+    quantity,
+    fixedSubtotal,
+    subtotal,
+    eventId,
+    userId,
+  };
 
   return (
     <>
@@ -95,77 +107,22 @@ export default function EventDetails() {
 
               <div>
                 {scope === 'tickets' && (
-                  <>
-                    <div className="select-tickets">
-                      <select
-                        onChange={(e) => setQuantity(Number(e.target.value))}>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                      </select>
-                      <span>General Admission</span>
-                      <span>$15.00</span>
-                    </div>
-                    <button onClick={handlePurchase}>Purchase</button>
-                  </>
+                  <Tickets
+                    setQuantity={setQuantity}
+                    handlePurchase={handlePurchase}
+                  />
                 )}
                 {scope === 'details' && (
-                  <>
-                    <div>Event Description</div>
-                    <div>Doors Open: 8:00PM 21+</div>
-                    <div>Venue Location</div>
-                    <div>
-                      <div>{locationName}</div>
-                      <div>{locationAddress}</div>
-                    </div>
-                  </>
+                  <Details
+                    locationAddress={locationAddress}
+                    locationName={locationName}
+                  />
                 )}
               </div>
             </div>
           </>
         )}
-        {scope === 'checkout' && (
-          <>
-            <div>Your Tickets</div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Qty</th>
-                  <th>Tickets</th>
-                  <th>Subtotal</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    GEMINEYE presents {title} at {locationName} {newDate}
-                  </td>
-                </tr>
-                <tr>
-                  <td>{quantity}</td>
-                  <td>General Admission @ $15.00</td>
-                  <td>${fixedSubtotal}</td>
-                </tr>
-              </tbody>
-            </table>
-            <button disabled>
-              Grand Total: ${(subtotal + 0.08 * subtotal).toFixed(2)}
-            </button>
-            <button>Add Another Event</button>
-            <button
-              onClick={() =>
-                handleCheckout(eventId, userId as number, quantity)
-              }>
-              Checkout
-            </button>
-          </>
-        )}
+        {scope === 'checkout' && <Checkout checkoutProps={checkoutProps} />}
       </div>
     </>
   );

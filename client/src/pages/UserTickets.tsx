@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import AppContext from '../components/AppContext';
 import { fetchTickets } from '../lib/data';
 import './UserTickets.css';
+import UniqueQrCode from '../components/UniqueQrCode';
+import '../components/QrCode.css';
 
 export type Ticket = {
   cost: number;
@@ -9,12 +11,15 @@ export type Ticket = {
   eventFlyer: string;
   locationAddress: string;
   locationName: string;
-  ticketCount: number;
   title: string;
+  hashedCode: string;
+  createdAt: string;
+  eventId: number;
+  userId: number;
 };
 
 export default function UserTickets() {
-  const [ticketsPurchased, setTicketsPurchased] = useState<Ticket>();
+  const [ticketsPurchased, setTicketsPurchased] = useState<Ticket[]>();
   const { user } = useContext(AppContext);
   const [error, setError] = useState<unknown>();
   const [isLoading, setIsLoading] = useState(true);
@@ -44,61 +49,57 @@ export default function UserTickets() {
     );
   if (!ticketsPurchased) return null;
 
-  const {
-    date,
-    title,
-    locationName,
-    eventFlyer,
-    locationAddress,
-    ticketCount,
-  } = ticketsPurchased;
-  const newDate = new Date(date).toDateString();
+  // const {
+  //   date,
+  //   title,
+  //   locationName,
+  //   eventFlyer,
+  //   locationAddress,
+  //   ticketCount,
+  // } = ticketsPurchased;
 
-  const renderTickets = () => {
-    const ticketList = [];
-    for (let i = 0; i < ticketCount; i++) {
-      ticketList.push(
-        <tr key={i}>
-          <td>{i + 1}</td>
-          <td>{newDate}</td>
-          <td>{title}</td>
-          <td>
-            {locationName}
-            <br />
-            {locationAddress}
-          </td>
-          <td>
-            {Math.floor(Math.random() * 1000)}.
-            {Math.floor(Math.random() * 1000)}.
-            {Math.floor(Math.random() * 1000)}
-          </td>
-        </tr>
-      );
-    }
-    return ticketList;
-  };
+  const renderTickets = ticketsPurchased.map((e, i) => {
+    const newDate = new Date(e.date).toDateString();
+    return (
+      <tr key={i}>
+        <td>
+          <img src={e.eventFlyer} />
+        </td>
+        <td>{i + 1}</td>
+        <td>{newDate}</td>
+        <td>
+          {e.locationName}
+          <br />
+          {e.locationAddress}
+        </td>
+        <td>
+          <UniqueQrCode code={e.hashedCode} />
+        </td>
+      </tr>
+    );
+  });
 
   return (
     <div>
-      {!ticketsPurchased ? (
-        'Tickets not found'
+      <img src="/images/dj1.JPG" />
+      {ticketsPurchased.length === 0 ? (
+        <div>No tickets purchased</div>
       ) : (
         <>
-          <img src={eventFlyer} alt="event-image" />
           <table>
             <thead>
               <tr>
                 <td>My Tickets</td>
               </tr>
               <tr>
+                <th>Event</th>
                 <th>Ticket Number</th>
                 <th>Date</th>
-                <th>Event</th>
                 <th>Location</th>
-                <th>Ticket ID</th>
+                <th>QR Code</th>
               </tr>
             </thead>
-            <tbody>{renderTickets()}</tbody>
+            <tbody>{renderTickets}</tbody>
           </table>
         </>
       )}

@@ -16,6 +16,3 @@
 
   insert into "artists" ("name")
       values ('melloMarsh');
-
-  insert into "userEvents" ("userId", "eventId", "ticketCount")
-      values ('1', '1', '2');

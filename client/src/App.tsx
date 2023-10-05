@@ -5,7 +5,7 @@ import EventsPage from './pages/EventsPage';
 import { useState, useEffect } from 'react';
 import { readEvents, Event } from './lib/data';
 import EventDetails from './pages/EventDetails';
-import Checkout from './pages/Checkout';
+import CheckoutPage from './pages/CheckoutPage';
 import AuthPage from './pages/AuthPage';
 import AppContext from './components/AppContext';
 import { Auth, User } from './lib';
@@ -73,7 +73,7 @@ export default function App() {
             element={<EventsPage upcomingEvents={upcomingEvents} />}
           />
           <Route path="/events/:eventId" element={<EventDetails />} />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/sign-up" element={<AuthPage action="sign-up" />} />
           <Route path="/sign-in" element={<AuthPage action="sign-in" />} />
           <Route path="/user-tickets" element={<UserTickets />} />

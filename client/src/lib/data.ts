@@ -24,7 +24,7 @@ export async function fetchEvent(eventId: number): Promise<Event> {
   return await res.json();
 }
 
-export async function fetchTickets(userId: number): Promise<Ticket> {
+export async function fetchTickets(userId: number): Promise<Ticket[]> {
   const auth = localStorage.getItem(tokenKey);
   const a = JSON.parse(auth as string);
   const req = {

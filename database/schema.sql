@@ -35,8 +35,8 @@ CREATE TABLE "artists" (
 CREATE TABLE "userEvents" (
   "userId" integer,
   "eventId" integer,
-  "ticketCount" integer,
-  PRIMARY KEY ("userId", "eventId")
+  "hashedCode" text,
+  PRIMARY KEY ("userId", "eventId", "hashedCode")
 );
 
 CREATE TABLE "artistEvents" (

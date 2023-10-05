@@ -79,23 +79,14 @@ app.get('/api/userEvents/:userId', authMiddleware, async (req, res, next) => {
       throw new ClientError(400, 'userId must be a positive integer');
     }
     const sql = `
-      select "cost",
-              "date",
-              "eventFlyer",
-              "locationAddress",
-              "locationName",
-              "ticketCount",
-              "title"
-        from "userEvents"
-        join "events" using ("eventId")
+      select *
+        from "userEvents" as u
+        join "events" as e using ("eventId")
         where "userId" = $1;
     `;
     const params = [userId];
     const result = await db.query<Event>(sql, params);
-    if (!result.rows[0]) {
-      throw new ClientError(404, `cannot find event from userId ${userId}`);
-    }
-    res.json(result.rows[0]);
+    res.json(result.rows);
   } catch (err) {
     next(err);
   }
@@ -120,14 +111,18 @@ app.post(
       if (!ticketCount) {
         throw new ClientError(400, 'ticketCount must be a positive integer');
       }
-      const sql = `
-      insert into "userEvents" ("eventId", "userId", "ticketCount")
+
+      for (let i = 1; i <= ticketCount; i++) {
+        const hashedCode = JSON.stringify({ eventId, userId, ticketNumber: i });
+        const sql = `
+      insert into "userEvents" ("eventId", "userId", "hashedCode")
         values ($1, $2, $3)
         returning *;
     `;
-      const params = [eventId, userId, ticketCount];
-      const result = await db.query(sql, params);
-      res.status(201).json(result.rows[0]);
+        const params = [eventId, userId, hashedCode];
+        const result = await db.query(sql, params);
+      }
+      res.sendStatus(201);
     } catch (err) {
       next(err);
     }
