@@ -43,7 +43,7 @@ export async function purchaseTickets(
   eventId: number,
   userId: number,
   ticketCount: number
-): Promise<Event> {
+): Promise<void> {
   const auth = localStorage.getItem(tokenKey);
   const a = JSON.parse(auth as string);
   const req = {
@@ -56,5 +56,4 @@ export async function purchaseTickets(
   };
   const res = await fetch(`/api/userEvents/${eventId}/${userId}`, req);
   if (!res.ok) throw new Error(`fetch Error ${res.status}`);
-  return await res.json();
 }

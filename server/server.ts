@@ -95,12 +95,16 @@ app.get('/api/userEvents/:userId', authMiddleware, async (req, res, next) => {
 
 // Purchase event
 
-const algorithm = 'aes-128-cbc';
+const algorithm = 'aes-128-gcm';
 const iv = Buffer.alloc(16);
 const key = '0613';
 const paddedkey = Buffer.concat([Buffer.from(key), Buffer.alloc(12)]);
 
-function encrypt(text: any, algorithm: any, key: any) {
+function encrypt(
+  text: string,
+  algorithm: crypto.CipherGCMTypes,
+  key: crypto.CipherKey
+): string {
   const cipher = crypto.createCipheriv(algorithm, key, iv);
   let encrypted = cipher.update(text, 'utf-8', 'hex');
   encrypted += cipher.final('hex');
@@ -126,7 +130,12 @@ app.post(
       }
 
       for (let i = 1; i <= ticketCount; i++) {
-        const codeText = JSON.stringify({ eventId, userId, ticketNumber: i });
+        const codeText = JSON.stringify({
+          eventId,
+          userId,
+          ticketNumber: i,
+          createdAt: Date.now(),
+        });
         const hashedCode = encrypt(codeText, algorithm, paddedkey);
         const sql = `
       insert into "userEvents" ("eventId", "userId", "hashedCode")
