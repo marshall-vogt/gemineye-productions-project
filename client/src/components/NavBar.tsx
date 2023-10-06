@@ -20,6 +20,9 @@ export default function NavBar() {
             <Link to="/events">
               <button className="navbar-button">Events</button>
             </Link>
+            <Link to="/audio">
+              <button className="navbar-button">Live Sets</button>
+            </Link>
             {user && (
               <>
                 <Link to="/user-tickets">
