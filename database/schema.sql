@@ -33,10 +33,11 @@ CREATE TABLE "artists" (
 );
 
 CREATE TABLE "userEvents" (
+  "ticketId" serial,
   "userId" integer,
   "eventId" integer,
   "hashedCode" text,
-  PRIMARY KEY ("userId", "eventId", "hashedCode")
+  PRIMARY KEY ("ticketId", "userId", "eventId", "hashedCode")
 );
 
 CREATE TABLE "artistEvents" (

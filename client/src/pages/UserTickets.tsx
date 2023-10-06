@@ -16,6 +16,7 @@ export type Ticket = {
   createdAt: string;
   eventId: number;
   userId: number;
+  ticketId: number;
 };
 
 export default function UserTickets() {
