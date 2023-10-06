@@ -5,6 +5,7 @@ import pg from 'pg';
 import { ClientError, errorMiddleware, authMiddleware } from './lib/index.js';
 import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 
 const connectionString =
   process.env.DATABASE_URL ||
@@ -94,6 +95,18 @@ app.get('/api/userEvents/:userId', authMiddleware, async (req, res, next) => {
 
 // Purchase event
 
+const algorithm = 'aes-128-cbc';
+const iv = Buffer.alloc(16);
+const key = '0613';
+const paddedkey = Buffer.concat([Buffer.from(key), Buffer.alloc(12)]);
+
+function encrypt(text: any, algorithm: any, key: any) {
+  const cipher = crypto.createCipheriv(algorithm, key, iv);
+  let encrypted = cipher.update(text, 'utf-8', 'hex');
+  encrypted += cipher.final('hex');
+  return encrypted;
+}
+
 app.post(
   '/api/userEvents/:eventId/:userId',
   authMiddleware,
@@ -113,7 +126,8 @@ app.post(
       }
 
       for (let i = 1; i <= ticketCount; i++) {
-        const hashedCode = JSON.stringify({ eventId, userId, ticketNumber: i });
+        const codeText = JSON.stringify({ eventId, userId, ticketNumber: i });
+        const hashedCode = encrypt(codeText, algorithm, paddedkey);
         const sql = `
       insert into "userEvents" ("eventId", "userId", "hashedCode")
         values ($1, $2, $3)
