@@ -5,22 +5,43 @@ import { useState, useRef } from 'react';
 import { tracks } from '../lib/tracks';
 
 export default function AudioPlayer() {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const audioRef = useRef();
-  console.log(audioRef);
+  const progressBarRef = useRef();
+  const [timeProgress, setTimeProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+  function handleNext() {
+    setCurrentIndex((currentIndex + 1) % tracks.length);
+  }
+  const progressBarProps = {
+    progressBarRef,
+    audioRef,
+    timeProgress,
+    duration,
+  };
+  const displayTrackProps = {
+    currentIndex,
+    audioRef,
+    setDuration,
+    progressBarRef,
+    handleNext,
+  };
+  const controlsProps = {
+    audioRef,
+    progressBarRef,
+    duration,
+    setTimeProgress,
+    setCurrentIndex,
+    currentIndex,
+    handleNext,
+  };
+
   return (
     <div className="audio-player">
       <div className="inner">
-        <DisplayTrack
-          currentTrack={tracks[currentIndex].url}
-          audioRef={audioRef}
-        />
-        <Controls />
-        <ProgressBar />
-        <button
-          onClick={() => setCurrentIndex((currentIndex + 1) % tracks.length)}>
-          Next
-        </button>
+        <DisplayTrack displayTrackProps={displayTrackProps} />
+        <Controls controlsProps={controlsProps} />
+        <ProgressBar progressBarProps={progressBarProps} />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import {
   IoPlayBackSharp,
   IoPlayForwardSharp,
@@ -7,32 +7,113 @@ import {
   IoPlaySharp,
   IoPauseSharp,
 } from 'react-icons/io5';
+import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from 'react-icons/io';
+import { tracks } from '../lib/tracks';
 
-export default function Controls() {
+type Props = {
+  controlsProps: {
+    audioRef: React.MutableRefObject<any>;
+    progressBarRef: React.MutableRefObject<any>;
+    duration: number;
+    setTimeProgress: React.Dispatch<React.SetStateAction<number>>;
+    setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
+    currentIndex: number;
+    handleNext: () => void;
+  };
+};
+
+export default function Controls({ controlsProps }: Props) {
+  const {
+    audioRef,
+    progressBarRef,
+    // duration,
+    setTimeProgress,
+    setCurrentIndex,
+    currentIndex,
+    handleNext,
+  } = controlsProps;
   const [isPlaying, setIsPlaying] = useState(false);
+  const playAnimationRef = useRef<number>();
+  const [volume, setVolume] = useState(60);
+  const [muteVolume, setMuteVolume] = useState(false);
+
   function togglePlayPause() {
-    setIsPlaying((prev) => !prev);
+    setIsPlaying(!isPlaying);
   }
+  function skipForward() {
+    audioRef.current.currentTime += 10;
+  }
+
+  function skipBackward() {
+    audioRef.current.currentTime -= 10;
+  }
+
+  function handlePrevious() {
+    setCurrentIndex((currentIndex + tracks.length - 1) % tracks.length);
+  }
+
+  const repeat = useCallback(() => {
+    const currentTime = audioRef.current['currentTime'];
+    setTimeProgress(currentTime);
+    progressBarRef.current['value'] = currentTime;
+    playAnimationRef.current = requestAnimationFrame(repeat);
+  }, [audioRef, progressBarRef, setTimeProgress]);
+
+  useEffect(() => {
+    if (isPlaying) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+    playAnimationRef.current = requestAnimationFrame(repeat);
+  }, [isPlaying, audioRef, repeat]);
+
+  useEffect(() => {
+    audioRef.current.volume = volume / 100;
+    audioRef.current.muted = muteVolume;
+  }, [volume, audioRef, muteVolume]);
 
   return (
     <div className="controls-wrapper">
-      <div className="controls">
-        <button>
-          <IoPlaySkipBackSharp />
+      <div className="controls" style={{ display: 'flex' }}>
+        <button onClick={handlePrevious}>
+          <IoPlaySkipBackSharp style={{ width: '10%' }} />
         </button>
-        <button>
-          <IoPlayBackSharp />
+        <button onClick={skipBackward}>
+          <IoPlayBackSharp style={{ width: '10%' }} />
         </button>
 
         <button onClick={togglePlayPause}>
-          {isPlaying ? <IoPauseSharp /> : <IoPlaySharp />}
+          {isPlaying ? (
+            <IoPauseSharp style={{ width: '10%' }} />
+          ) : (
+            <IoPlaySharp style={{ width: '10%' }} />
+          )}
         </button>
-        <button>
-          <IoPlayForwardSharp />
+        <button onClick={skipForward}>
+          <IoPlayForwardSharp style={{ width: '10%' }} />
         </button>
-        <button>
-          <IoPlaySkipForwardSharp />
+        <button onClick={handleNext}>
+          <IoPlaySkipForwardSharp style={{ width: '10%' }} />
         </button>
+      </div>
+      <div className="volume">
+        <button onClick={() => setMuteVolume(!muteVolume)}>
+          {muteVolume || volume < 5 ? (
+            <IoMdVolumeOff />
+          ) : volume < 40 ? (
+            <IoMdVolumeLow />
+          ) : (
+            <IoMdVolumeHigh />
+          )}
+        </button>
+        <input
+          type="range"
+          min={0}
+          max={100}
+          value={volume}
+          onChange={(e) => setVolume(Number(e.target.value))}
+        />
       </div>
     </div>
   );
