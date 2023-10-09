@@ -12,8 +12,8 @@ import { tracks } from '../lib/tracks';
 
 type Props = {
   controlsProps: {
-    audioRef: React.MutableRefObject<any>;
-    progressBarRef: React.MutableRefObject<any>;
+    audioRef: React.MutableRefObject<HTMLAudioElement | null>;
+    progressBarRef: React.MutableRefObject<HTMLInputElement | null>;
     duration: number;
     setTimeProgress: React.Dispatch<React.SetStateAction<number>>;
     setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
@@ -41,11 +41,11 @@ export default function Controls({ controlsProps }: Props) {
     setIsPlaying(!isPlaying);
   }
   function skipForward() {
-    audioRef.current.currentTime += 10;
+    audioRef.current!.currentTime += 10;
   }
 
   function skipBackward() {
-    audioRef.current.currentTime -= 10;
+    audioRef.current!.currentTime -= 10;
   }
 
   function handlePrevious() {
@@ -53,24 +53,24 @@ export default function Controls({ controlsProps }: Props) {
   }
 
   const repeat = useCallback(() => {
-    const currentTime = audioRef.current['currentTime'];
+    const currentTime = audioRef.current!['currentTime'];
     setTimeProgress(currentTime);
-    progressBarRef.current['value'] = currentTime;
+    progressBarRef.current!['value'] = String(currentTime);
     playAnimationRef.current = requestAnimationFrame(repeat);
   }, [audioRef, progressBarRef, setTimeProgress]);
 
   useEffect(() => {
     if (isPlaying) {
-      audioRef.current.play();
+      audioRef.current!.play();
     } else {
-      audioRef.current.pause();
+      audioRef.current!.pause();
     }
     playAnimationRef.current = requestAnimationFrame(repeat);
   }, [isPlaying, audioRef, repeat]);
 
   useEffect(() => {
-    audioRef.current.volume = volume / 100;
-    audioRef.current.muted = muteVolume;
+    audioRef.current!.volume = volume / 100;
+    audioRef.current!.muted = muteVolume;
   }, [volume, audioRef, muteVolume]);
 
   return (

@@ -3,9 +3,9 @@ import { tracks } from '../lib/tracks';
 type Props = {
   displayTrackProps: {
     currentIndex: number;
-    audioRef: React.MutableRefObject<any>;
+    audioRef: React.MutableRefObject<HTMLAudioElement | null>;
     setDuration: React.Dispatch<React.SetStateAction<number>>;
-    progressBarRef: React.MutableRefObject<any>;
+    progressBarRef: React.MutableRefObject<HTMLInputElement | null>;
     handleNext: () => void;
   };
 };
@@ -15,9 +15,9 @@ export default function DisplayTrack({ displayTrackProps }: Props) {
     displayTrackProps;
 
   function onLoadedMetadata() {
-    const seconds = audioRef.current['duration'];
+    const seconds = audioRef.current!['duration'];
     setDuration(seconds);
-    progressBarRef.current['max'] = seconds;
+    progressBarRef.current!['max'] = String(seconds);
   }
 
   return (

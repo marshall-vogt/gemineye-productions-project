@@ -2,8 +2,8 @@
 
 type Props = {
   progressBarProps: {
-    progressBarRef: React.MutableRefObject<undefined>;
-    audioRef: React.MutableRefObject<undefined>;
+    progressBarRef: React.MutableRefObject<HTMLInputElement | null>;
+    audioRef: React.MutableRefObject<HTMLAudioElement | null>;
     timeProgress: number;
     duration: number;
   };
@@ -13,7 +13,9 @@ export default function ProgressBar({ progressBarProps }: Props) {
   const { progressBarRef, audioRef, timeProgress, duration } = progressBarProps;
   function handleProgessChange() {
     if (audioRef.current && progressBarRef.current) {
-      audioRef.current['currentTime'] = progressBarRef.current['value'];
+      audioRef.current!['currentTime'] = Number(
+        progressBarRef.current['value']
+      );
     }
   }
   const formatTime = (time: number): string => {
