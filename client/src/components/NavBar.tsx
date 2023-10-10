@@ -1,34 +1,46 @@
 import { Outlet, Link } from 'react-router-dom';
-import './NavBar.css';
 import { useContext } from 'react';
 import AppContext from './AppContext';
+import Footer from './Footer';
 
 export default function NavBar() {
   const { user, handleSignOut } = useContext(AppContext);
 
   return (
-    <div>
-      <div className="navbar">
-        <nav>
-          <div className="logo">
-            <h2>Gemineye Productions</h2>
+    <div className="flex flex-col">
+      <div className="h-[7vh] border bg-white">
+        <nav className="flex h-full">
+          <div className="flex items-center justify-center w-[33vw]">
+            <h2 className="w-full flex justify-center text-xl font-bold">
+              Gemineye Productions
+            </h2>
           </div>
-          <div className="links">
+          <div className="flex items-center justify-around w-[66vw]">
             <Link to="/">
-              <button className="navbar-button">Home</button>
+              <button className="bg-gray-200 hover:bg-gray-300 w-[10vw] h-[4vh] rounded-xl">
+                Home
+              </button>
             </Link>
             <Link to="/events">
-              <button className="navbar-button">Events</button>
+              <button className="hover:bg-gray-300 bg-gray-200 w-[10vw] h-[4vh] rounded-xl">
+                Events
+              </button>
             </Link>
             <Link to="/audio">
-              <button className="navbar-button">Live Sets</button>
+              <button className="bg-gray-200 hover:bg-gray-300 w-[10vw] h-[4vh] rounded-xl">
+                Live Sets
+              </button>
             </Link>
             {user && (
               <>
                 <Link to="/user-tickets">
-                  <button>My Tickets</button>
+                  <button className="bg-gray-200 hover:bg-gray-300 w-[10vw] h-[4vh] rounded-xl">
+                    My Tickets
+                  </button>
                 </Link>
-                <button className="navbar-button" onClick={handleSignOut}>
+                <button
+                  className="bg-gray-200 hover:bg-gray-300 w-[10vw] h-[4vh] rounded-xl"
+                  onClick={handleSignOut}>
                   Sign-Out
                 </button>
               </>
@@ -36,10 +48,14 @@ export default function NavBar() {
             {!user && (
               <>
                 <Link to="/sign-in">
-                  <button className="navbar-button">Sign-In</button>
+                  <button className="bg-gray-200 hover:bg-gray-300 w-[10vw] h-[4vh] rounded-xl">
+                    Sign-In
+                  </button>
                 </Link>
                 <Link to="/sign-up">
-                  <button className="navbar-button">Sign-Up</button>
+                  <button className="bg-gray-200 hover:bg-gray-300 w-[10vw] h-[4vh] rounded-xl">
+                    Sign-Up
+                  </button>
                 </Link>
               </>
             )}
@@ -47,6 +63,9 @@ export default function NavBar() {
         </nav>
       </div>
       <Outlet />
+      <div className="bottom-0 left-0 fixed w-full">
+        <Footer />
+      </div>
     </div>
   );
 }

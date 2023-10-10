@@ -2,7 +2,6 @@ import { useParams } from 'react-router-dom';
 import { fetchEvent, purchaseTickets } from '../lib/data';
 import { useEffect, useState, useContext } from 'react';
 import { Event } from '../lib/data';
-import './EventDetails.css';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../components/AppContext';
 import Checkout from '../components/Checkout';

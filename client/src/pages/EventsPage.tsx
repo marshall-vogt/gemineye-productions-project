@@ -1,6 +1,5 @@
 import EventPageEvents from '../components/EventPageEvents';
 import { Event } from '../lib/data';
-import './EventsPage.css';
 
 type Props = {
   upcomingEvents: Event[] | undefined;
