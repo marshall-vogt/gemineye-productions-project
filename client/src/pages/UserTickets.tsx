@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import AppContext from '../components/AppContext';
 import { fetchTickets } from '../lib/data';
-import './UserTickets.css';
 import UniqueQrCode from '../components/UniqueQrCode';
 import '../components/QrCode.css';
 

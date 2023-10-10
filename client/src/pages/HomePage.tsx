@@ -1,4 +1,4 @@
-import './HomePage.css';
+import Carousel from '../components/Carousel';
 import HomePageEvents from '../components/HomePageEvents';
 import { Event } from '../lib/data';
 
@@ -8,19 +8,22 @@ type Props = {
 
 export default function HomePage({ upcomingEvents }: Props) {
   return (
-    <>
-      <div className="imageDiv">
-        <img src="/images/dj1.JPG" alt="dj" />
+    <div>
+      <Carousel />
+      <div className="text-white">
+        <div className="flex justify-center m-5">
+          <h3 className="font-bold text-xl">Upcoming Events</h3>
+        </div>
+        <div>
+          <ul>
+            {upcomingEvents &&
+              upcomingEvents.map((event) => (
+                <HomePageEvents key={event.eventId} event={event} />
+              ))}
+          </ul>
+        </div>
       </div>
-      <h3>Upcoming Events</h3>
-      <div>
-        <ul>
-          {upcomingEvents &&
-            upcomingEvents.map((event) => (
-              <HomePageEvents key={event.eventId} event={event} />
-            ))}
-        </ul>
-      </div>
-    </>
+      <div className="h-[6vh]"></div>
+    </div>
   );
 }
