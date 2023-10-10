@@ -7,7 +7,7 @@ export default function NavBar() {
   const { user, handleSignOut } = useContext(AppContext);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-[#2A2438]">
       <div className="h-[7vh] border bg-white">
         <nav className="flex h-full">
           <div className="flex items-center justify-center w-[33vw]">

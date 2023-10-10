@@ -17,9 +17,9 @@ export default function HomePageEvents({ event }: Props) {
           <div>{locationName}</div>
           <div>{locationAddress}</div>
         </div>
-        <div className="w-1/6 border flex justify-center">
+        <div className="border rounded-md">
           <Link to={`events/${eventId}`}>
-            <button>Tickets</button>
+            <button className="p-3 flex justify-center">Tickets</button>
           </Link>
         </div>
       </div>

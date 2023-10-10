@@ -11,10 +11,14 @@ import Details from '../components/Details';
 type Scope = 'tickets' | 'details' | 'checkout';
 
 export default function EventDetails() {
+  const style1 = 'bg-black text-white ml-2 p-1';
+  const style2 = 'bg-white text-black ml-2 p-1';
   const params = useParams();
   const eventId = Number(params.eventId);
   const [event, setEvent] = useState<Event>();
   const [scope, setScope] = useState<Scope>('tickets');
+  const [ticketStyle, setTicketStyle] = useState(style1);
+  const [detailStyle, setDetailStyle] = useState(style2);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<unknown>();
   const [quantity, setQuantity] = useState<number>(1);
@@ -39,6 +43,18 @@ export default function EventDetails() {
     } catch (err) {
       setError(err);
     }
+  }
+
+  function handleTicketClick() {
+    setScope('tickets');
+    setTicketStyle(style1);
+    setDetailStyle(style2);
+  }
+
+  function handleDetailsClick() {
+    setScope('details');
+    setDetailStyle(style1);
+    setTicketStyle(style2);
   }
 
   useEffect(() => {
@@ -83,27 +99,27 @@ export default function EventDetails() {
   };
 
   return (
-    <>
-      <div className="event-image-container">
-        <img
-          src={`${eventFlyer}`}
-          alt="event flyer"
-          className="event-details-image"
-        />
+    <div className="flex flex-col items-center">
+      <div className="flex justify-center m-5">
+        <img src={`${eventFlyer}`} alt="event flyer" className="w-[50vw]" />
       </div>
-      <div>
+      <div className="bg-[#411e8f] w-[70vw] flex flex-col items-center justify-around text-white">
         {scope !== 'checkout' && (
           <>
+            <div className="mt-10 text-2xl">GEMINEYE presents</div>
             <div>
-              GEMINEYE presents {title} at {locationName}
+              {title} at {locationName}
             </div>
             <div>{newDate}</div>
             <div>
-              <div className="scope">
-                <button onClick={() => setScope('tickets')}>Tickets</button>
-                <button onClick={() => setScope('details')}>Details</button>
+              <div className="flex">
+                <button onClick={handleTicketClick} className={ticketStyle}>
+                  Tickets
+                </button>
+                <button onClick={handleDetailsClick} className={detailStyle}>
+                  Details
+                </button>
               </div>
-
               <div>
                 {scope === 'tickets' && (
                   <Tickets
@@ -123,6 +139,7 @@ export default function EventDetails() {
         )}
         {scope === 'checkout' && <Checkout checkoutProps={checkoutProps} />}
       </div>
-    </>
+      <div className="h-[8vh]"></div>
+    </div>
   );
 }

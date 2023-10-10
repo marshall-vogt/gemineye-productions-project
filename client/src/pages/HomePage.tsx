@@ -16,14 +16,13 @@ export default function HomePage({ upcomingEvents }: Props) {
         </div>
         <div>
           <ul>
-            {upcomingEvents &&
-              upcomingEvents.map((event) => (
-                <HomePageEvents key={event.eventId} event={event} />
-              ))}
+            {upcomingEvents?.map((event) => (
+              <HomePageEvents key={event.eventId} event={event} />
+            ))}
           </ul>
         </div>
       </div>
-      <div className="h-[6vh]"></div>
+      <div className="h-[8vh]"></div>
     </div>
   );
 }

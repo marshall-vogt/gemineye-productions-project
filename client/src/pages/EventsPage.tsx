@@ -7,14 +7,14 @@ type Props = {
 
 export default function EventsPage({ upcomingEvents }: Props) {
   return (
-    <>
-      <h3>Events</h3>
-      <div className="events">
+    <div className="text-white flex flex-col items-center mt-10">
+      <h2 className="text-3xl">Events</h2>
+      <div className="flex flex-col justify-center m-5 w-[80vw]">
         {upcomingEvents &&
           upcomingEvents.map((event: Event) => (
             <EventPageEvents key={event.eventId} event={event} />
           ))}
       </div>
-    </>
+    </div>
   );
 }
