@@ -8,11 +8,11 @@ import Checkout from '../components/Checkout';
 import Tickets from '../components/Tickets';
 import Details from '../components/Details';
 
-type Scope = 'tickets' | 'details' | 'checkout';
+export type Scope = 'tickets' | 'details' | 'checkout';
 
 export default function EventDetails() {
-  const style1 = 'bg-black text-white ml-2 p-1';
-  const style2 = 'bg-white text-black ml-2 p-1';
+  const style1 = 'bg-black text-white p-1';
+  const style2 = 'bg-white text-black p-1';
   const params = useParams();
   const eventId = Number(params.eventId);
   const [event, setEvent] = useState<Event>();
@@ -96,6 +96,7 @@ export default function EventDetails() {
     subtotal,
     eventId,
     userId,
+    setScope,
   };
 
   return (
@@ -107,7 +108,7 @@ export default function EventDetails() {
         {scope !== 'checkout' && (
           <>
             <div className="mt-10 text-2xl">GEMINEYE presents</div>
-            <div>
+            <div className="text-xl">
               {title} at {locationName}
             </div>
             <div>{newDate}</div>

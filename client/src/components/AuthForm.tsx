@@ -61,11 +61,15 @@ export default function AuthForm({ action, onSignIn }: Props) {
           <input required type="password" name="password" />
         </label>
       </div>
-      <div>
+      <div className="flex flex-col items-center justify-around">
+        <button
+          type="submit"
+          className="bg-[#d9d9d9] text-black m-2 w-20 rounded-sm">
+          {submitButtonText}
+        </button>
         <small>
           <Link to={alternateActionTo}>{alternateActionText}</Link>
         </small>
-        <button type="submit">{submitButtonText}</button>
       </div>
       <>
         {error && (

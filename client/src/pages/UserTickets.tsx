@@ -61,18 +61,18 @@ export default function UserTickets() {
   const renderTickets = ticketsPurchased.map((e, i) => {
     const newDate = new Date(e.date).toDateString();
     return (
-      <tr key={i}>
-        <td>
+      <tr key={i} className="m-20">
+        <td className="text-center">
           <img src={e.eventFlyer} />
         </td>
-        <td>{i + 1}</td>
-        <td>{newDate}</td>
-        <td>
+        <td className="text-center">{i + 1}</td>
+        <td className="text-center">{newDate}</td>
+        <td className="text-center">
           {e.locationName}
           <br />
           {e.locationAddress}
         </td>
-        <td>
+        <td className="w-[20vw]">
           <UniqueQrCode code={e.hashedCode} />
         </td>
       </tr>
@@ -80,29 +80,29 @@ export default function UserTickets() {
   });
 
   return (
-    <div>
-      <img src="/images/dj1.JPG" />
-      {ticketsPurchased.length === 0 ? (
-        <div>No tickets purchased</div>
-      ) : (
-        <>
-          <table>
-            <thead>
-              <tr>
-                <td>My Tickets</td>
-              </tr>
-              <tr>
-                <th>Event</th>
-                <th>Ticket Number</th>
-                <th>Date</th>
-                <th>Location</th>
-                <th>QR Code</th>
-              </tr>
-            </thead>
-            <tbody>{renderTickets}</tbody>
-          </table>
-        </>
-      )}
-    </div>
+    <>
+      <div className="text-white">
+        {ticketsPurchased.length === 0 ? (
+          <div>No tickets purchased</div>
+        ) : (
+          <>
+            <div className="text-center text-2xl m-3">My Tickets</div>
+            <table>
+              <thead>
+                <tr>
+                  <th className="border w-[20vw]">Event</th>
+                  <th className="border w-[20vw]">Ticket Number</th>
+                  <th className="border w-[20vw]">Date</th>
+                  <th className="border w-[20vw]">Location</th>
+                  <th className="border w-[20vw]">QR Code</th>
+                </tr>
+              </thead>
+              <tbody>{renderTickets}</tbody>
+            </table>
+          </>
+        )}
+      </div>
+      <div className="h-[8vh]"></div>
+    </>
   );
 }
