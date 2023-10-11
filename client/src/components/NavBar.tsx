@@ -7,15 +7,15 @@ export default function NavBar() {
   const { user, handleSignOut } = useContext(AppContext);
 
   return (
-    <div className="flex flex-col bg-[#2A2438]">
-      <div className="h-[7vh] border bg-white">
+    <div className="flex flex-col">
+      <div className="h-[7vh] border rounded-md bg-[#310a5d]">
         <nav className="flex h-full">
           <div className="flex items-center justify-center w-[33vw]">
-            <h2 className="w-full flex justify-center text-xl font-bold">
+            <h2 className="w-full md:text-xl font-bold text-white ml-10 md:ml-20 font-serif">
               Gemineye Productions
             </h2>
           </div>
-          <div className="flex items-center justify-around w-[66vw]">
+          <div className="md:flex items-center justify-around w-[66vw]">
             <Link to="/">
               <button className="bg-gray-200 hover:bg-gray-300 w-[10vw] h-[4vh] rounded-xl">
                 Home
@@ -24,11 +24,6 @@ export default function NavBar() {
             <Link to="/events">
               <button className="hover:bg-gray-300 bg-gray-200 w-[10vw] h-[4vh] rounded-xl">
                 Events
-              </button>
-            </Link>
-            <Link to="/audio">
-              <button className="bg-gray-200 hover:bg-gray-300 w-[10vw] h-[4vh] rounded-xl">
-                Live Sets
               </button>
             </Link>
             {user && (

@@ -49,16 +49,27 @@ export default function AuthForm({ action, onSignIn }: Props) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label>
+      <div className="m-2">
+        <label className="m-2">
           Username:
-          <input required autoFocus type="text" name="username" />
+          <input
+            required
+            autoFocus
+            type="text"
+            name="username"
+            className="text-black m-2"
+          />
         </label>
       </div>
-      <div>
-        <label>
+      <div className="flex justify-end m-2">
+        <label className="m-2">
           Password:
-          <input required type="password" name="password" />
+          <input
+            required
+            type="password"
+            name="password"
+            className="text-black m-2"
+          />
         </label>
       </div>
       <div className="flex flex-col items-center justify-around">

@@ -28,8 +28,8 @@ export default function DisplayTrack({ displayTrackProps }: Props) {
         onLoadedMetadata={onLoadedMetadata}
         onEnded={handleNext}
       />
-      <div className="text">
-        <p className="name">{tracks[currentIndex].name}</p>
+      <div className="font-semibold mb-1 tracking-wide">
+        <p>{tracks[currentIndex].name}</p>
       </div>
     </div>
   );

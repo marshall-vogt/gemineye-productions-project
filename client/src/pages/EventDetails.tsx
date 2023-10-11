@@ -140,7 +140,7 @@ export default function EventDetails() {
         )}
         {scope === 'checkout' && <Checkout checkoutProps={checkoutProps} />}
       </div>
-      <div className="h-[8vh]"></div>
+      <div className="h-[11vh]"></div>
     </div>
   );
 }

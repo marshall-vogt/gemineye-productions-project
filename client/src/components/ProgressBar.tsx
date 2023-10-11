@@ -1,5 +1,3 @@
-import './ProgressBar.css';
-
 type Props = {
   progressBarProps: {
     progressBarRef: React.MutableRefObject<HTMLInputElement | null>;
@@ -27,15 +25,16 @@ export default function ProgressBar({ progressBarProps }: Props) {
     return '00:00';
   };
   return (
-    <div className="progress">
-      <span className="time current">{formatTime(timeProgress)}</span>
+    <div className="w-[20vw] flex justify-around">
+      <span>{formatTime(timeProgress)}</span>
       <input
         type="range"
         ref={progressBarRef}
         defaultValue="0"
         onChange={handleProgessChange}
+        className="w-[10vw]"
       />
-      <span className="time">{formatTime(duration)}</span>
+      <span>{formatTime(duration)}</span>
     </div>
   );
 }

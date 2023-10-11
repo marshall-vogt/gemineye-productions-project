@@ -37,12 +37,10 @@ export default function AudioPlayer() {
   };
 
   return (
-    <div className="audio-player">
-      <div className="inner">
-        <DisplayTrack displayTrackProps={displayTrackProps} />
-        <Controls controlsProps={controlsProps} />
-        <ProgressBar progressBarProps={progressBarProps} />
-      </div>
+    <div className="flex flex-col justify-center items-center h-full">
+      <DisplayTrack displayTrackProps={displayTrackProps} />
+      <Controls controlsProps={controlsProps} />
+      <ProgressBar progressBarProps={progressBarProps} />
     </div>
   );
 }

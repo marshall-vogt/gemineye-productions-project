@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 import AppContext from '../components/AppContext';
 import { fetchTickets } from '../lib/data';
 import UniqueQrCode from '../components/UniqueQrCode';
-import '../components/QrCode.css';
 
 export type Ticket = {
   cost: number;
@@ -49,33 +48,24 @@ export default function UserTickets() {
     );
   if (!ticketsPurchased) return null;
 
-  // const {
-  //   date,
-  //   title,
-  //   locationName,
-  //   eventFlyer,
-  //   locationAddress,
-  //   ticketCount,
-  // } = ticketsPurchased;
-
   const renderTickets = ticketsPurchased.map((e, i) => {
     const newDate = new Date(e.date).toDateString();
     return (
-      <tr key={i} className="m-20">
-        <td className="text-center">
-          <img src={e.eventFlyer} />
-        </td>
-        <td className="text-center">{i + 1}</td>
-        <td className="text-center">{newDate}</td>
-        <td className="text-center">
+      <>
+        <div className="flex justify-center items-center mb-4 mt-4">
+          <img src={e.eventFlyer} className="h-[30vh]" />
+        </div>
+        <div className="flex justify-center items-center">{i + 1}</div>
+        <div className="flex justify-center items-center">{newDate}</div>
+        <div className="flex justify-center items-center">
           {e.locationName}
           <br />
           {e.locationAddress}
-        </td>
-        <td className="w-[20vw]">
+        </div>
+        <div className="flex justify-center items-center">
           <UniqueQrCode code={e.hashedCode} />
-        </td>
-      </tr>
+        </div>
+      </>
     );
   });
 
@@ -86,23 +76,29 @@ export default function UserTickets() {
           <div>No tickets purchased</div>
         ) : (
           <>
-            <div className="text-center text-2xl m-3">My Tickets</div>
-            <table>
-              <thead>
-                <tr>
-                  <th className="border w-[20vw]">Event</th>
-                  <th className="border w-[20vw]">Ticket Number</th>
-                  <th className="border w-[20vw]">Date</th>
-                  <th className="border w-[20vw]">Location</th>
-                  <th className="border w-[20vw]">QR Code</th>
-                </tr>
-              </thead>
-              <tbody>{renderTickets}</tbody>
-            </table>
+            <div className="text-center text-2xl m-5">My Tickets</div>
+            <div className="grid grid-cols-5">
+              <div className="border w-[20vw] flex justify-center items-center">
+                Event
+              </div>
+              <div className="border w-[20vw] flex justify-center items-center">
+                Ticket Number
+              </div>
+              <div className="border w-[20vw] flex justify-center items-center">
+                Date
+              </div>
+              <div className="border w-[20vw] flex justify-center items-center">
+                Location
+              </div>
+              <div className="border w-[20vw] flex justify-center items-center">
+                QR Code
+              </div>
+              <>{renderTickets}</>
+            </div>
           </>
         )}
       </div>
-      <div className="h-[8vh]"></div>
+      <div className="h-[11vh]"></div>
     </>
   );
 }

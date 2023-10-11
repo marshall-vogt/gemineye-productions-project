@@ -74,30 +74,28 @@ export default function Controls({ controlsProps }: Props) {
   }, [volume, audioRef, muteVolume]);
 
   return (
-    <div className="controls-wrapper">
-      <div className="controls" style={{ display: 'flex' }}>
+    <div className="flex flex-col justify-center items-center w-[20vw]">
+      <div
+        className="w-[10vw] flex justify-between mb-2"
+        style={{ display: 'flex' }}>
         <button onClick={handlePrevious}>
-          <IoPlaySkipBackSharp style={{ width: '10%' }} />
+          <IoPlaySkipBackSharp />
         </button>
         <button onClick={skipBackward}>
-          <IoPlayBackSharp style={{ width: '10%' }} />
+          <IoPlayBackSharp />
         </button>
 
         <button onClick={togglePlayPause}>
-          {isPlaying ? (
-            <IoPauseSharp style={{ width: '10%' }} />
-          ) : (
-            <IoPlaySharp style={{ width: '10%' }} />
-          )}
+          {isPlaying ? <IoPauseSharp /> : <IoPlaySharp />}
         </button>
         <button onClick={skipForward}>
-          <IoPlayForwardSharp style={{ width: '10%' }} />
+          <IoPlayForwardSharp />
         </button>
         <button onClick={handleNext}>
-          <IoPlaySkipForwardSharp style={{ width: '10%' }} />
+          <IoPlaySkipForwardSharp />
         </button>
       </div>
-      <div className="volume">
+      <div className="mb-1">
         <button onClick={() => setMuteVolume(!muteVolume)}>
           {muteVolume || volume < 5 ? (
             <IoMdVolumeOff />
@@ -113,6 +111,7 @@ export default function Controls({ controlsProps }: Props) {
           max={100}
           value={volume}
           onChange={(e) => setVolume(Number(e.target.value))}
+          className=""
         />
       </div>
     </div>

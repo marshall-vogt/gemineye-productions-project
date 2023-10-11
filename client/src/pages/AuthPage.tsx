@@ -24,13 +24,13 @@ export default function AuthPage({ action }: Props) {
       : 'Create an account to get started!';
 
   return (
-    <div className="text-white flex flex-col items-center">
+    <div className="text-white flex flex-col items-center justify-center">
       <div>
         <header className="text-center m-5 text-2xl">
           <h2>{welcomeMessage}</h2>
         </header>
       </div>
-      <div className="w-[50vw]">
+      <div className="w-[50vw] flex flex-col items-center">
         <AuthForm key={action} action={action} onSignIn={handleSignIn} />
       </div>
     </div>

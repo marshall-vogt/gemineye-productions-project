@@ -11,7 +11,6 @@ import AppContext from './components/AppContext';
 import { Auth, User } from './lib';
 import NotFound from './pages/NotFoundPage';
 import UserTickets from './pages/UserTickets';
-import AudioPlayer from './pages/AudioPlayer';
 
 const tokenKey = 'react-context-jwt';
 
@@ -78,7 +77,6 @@ export default function App() {
           <Route path="/sign-up" element={<AuthPage action="sign-up" />} />
           <Route path="/sign-in" element={<AuthPage action="sign-in" />} />
           <Route path="/user-tickets" element={<UserTickets />} />
-          <Route path="/audio" element={<AudioPlayer />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
