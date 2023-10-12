@@ -53,11 +53,11 @@ export default function UserTickets() {
     return (
       <>
         <div className="flex justify-center items-center mb-4 mt-4">
-          <img src={e.eventFlyer} className="h-[30vh]" />
+          <img src={e.eventFlyer} className="" />
         </div>
         <div className="flex justify-center items-center">{i + 1}</div>
         <div className="flex justify-center items-center">{newDate}</div>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center text-center">
           {e.locationName}
           <br />
           {e.locationAddress}

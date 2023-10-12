@@ -49,7 +49,7 @@ export default function AuthForm({ action, onSignIn }: Props) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="m-2">
+      <div className="m-2 text-start">
         <label className="m-2">
           Username:
           <input
@@ -61,7 +61,7 @@ export default function AuthForm({ action, onSignIn }: Props) {
           />
         </label>
       </div>
-      <div className="flex justify-end m-2">
+      <div className="m-2 sm:text-right">
         <label className="m-2">
           Password:
           <input

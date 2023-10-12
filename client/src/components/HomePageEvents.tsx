@@ -12,8 +12,8 @@ export default function HomePageEvents({ event }: Props) {
     <li>
       <div className="flex w-full sm:h-[5vh] h-[7vh] justify-around items-center mt-5 bg-[#352f44] mr-2 text-xs md:text-sm 2xl:text-lg">
         <div className="w-1/5 text-center">{newDate}</div>
-        <div className="w-1/4 flex justify-center">{title}</div>
-        <div className="w-1/4 flex flex-col items-center">
+        <div className="w-1/4 text-center">{title}</div>
+        <div className="w-1/4 text-center">
           <div>{locationName}</div>
           <div className="text-center">{locationAddress}</div>
         </div>

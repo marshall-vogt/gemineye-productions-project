@@ -11,10 +11,10 @@ export default function NavBar() {
 
   return (
     <div className="flex flex-col">
-      <div className="h-[7vh] border rounded-md bg-[#310a5d]">
+      <div className="h-[7vh] rounded-md bg-[#310a5d]">
         <nav className="flex h-full justify-between">
           <div className="flex items-center w-[33vw] justify-between">
-            <h2 className="w-full md:text-xl font-bold text-white ml-10 md:ml-20 font-serif">
+            <h2 className="ml-5 text-base md:text-xl font-bold text-white text-center">
               Gemineye Productions
             </h2>
           </div>
@@ -58,7 +58,7 @@ export default function NavBar() {
               </>
             )}
           </div>
-          <div className="sm:hidden">
+          <div className="sm:hidden text-white flex justify-center items-center mr-3">
             <Hamburger toggled={isOpen} toggle={() => setOpen(!isOpen)} />
           </div>
         </nav>

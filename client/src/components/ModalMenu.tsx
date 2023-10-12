@@ -27,50 +27,26 @@ export default function ModalMenu({
       <div>
         <div className="flex flex-col items-center justify-between h-[30vh]">
           <Link to="/">
-            <button
-              className="w-[10vw] h-[4vh] rounded-xl"
-              onClick={() => setOpen(!isOpen)}>
-              Home
-            </button>
+            <button onClick={() => setOpen(!isOpen)}>Home</button>
           </Link>
           <Link to="/events">
-            <button
-              className="w-[10vw] h-[4vh] rounded-xl"
-              onClick={() => setOpen(!isOpen)}>
-              Events
-            </button>
+            <button onClick={() => setOpen(!isOpen)}>Events</button>
           </Link>
           {user && (
             <>
               <Link to="/user-tickets">
-                <button
-                  className="w-[10vw] h-[4vh] rounded-xl"
-                  onClick={() => setOpen(!isOpen)}>
-                  My Tickets
-                </button>
+                <button onClick={() => setOpen(!isOpen)}>My Tickets</button>
               </Link>
-              <button
-                className="w-[10vw] h-[4vh] rounded-xl"
-                onClick={signOutClick}>
-                Sign-Out
-              </button>
+              <button onClick={signOutClick}>Sign-Out</button>
             </>
           )}
           {!user && (
             <>
               <Link to="/sign-in">
-                <button
-                  className="w-[10vw] h-[4vh] rounded-xl"
-                  onClick={() => setOpen(!isOpen)}>
-                  Sign-In
-                </button>
+                <button onClick={() => setOpen(!isOpen)}>Sign-In</button>
               </Link>
               <Link to="/sign-up">
-                <button
-                  className="w-[10vw] h-[4vh] rounded-xl"
-                  onClick={() => setOpen(!isOpen)}>
-                  Sign-Up
-                </button>
+                <button onClick={() => setOpen(!isOpen)}>Sign-Up</button>
               </Link>
             </>
           )}

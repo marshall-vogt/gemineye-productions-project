@@ -33,7 +33,7 @@ export default function Checkout({ checkoutProps }: Props) {
   return (
     <>
       <div className="text-3xl">Your Tickets</div>
-      <table className="bg-[#d9d9d9] text-black m-2 w-[50vw]">
+      <table className="bg-[#d9d9d9] text-black m-2 w-[80vw] sm:w-[50vw]">
         <thead>
           <tr>
             <th className="border border-black w-[calc(100%/6)]">Qty</th>
@@ -44,18 +44,18 @@ export default function Checkout({ checkoutProps }: Props) {
         <tbody>
           <tr className="border border-black w-[100%]">
             <td></td>
-            <td className="flex flex-col items-center underline m-2">
-              <div>GEMINEYE presents</div>
-              <div>
+            <td className="flex flex-col items-center underline m-2 text-center">
+              <div className="text-sm xl:text-base">GEMINEYE presents</div>
+              <div className="text-base xl:text-lg">
                 {title} at {locationName}
               </div>
-              <div>{newDate}</div>
+              <div className="text-xs xl:text-sm">{newDate}</div>
             </td>
             <td></td>
           </tr>
           <tr>
             <td className="border border-black text-center">{quantity}</td>
-            <td className="border border-black text-center">
+            <td className="border border-black text-center text-xs sm:text-sm md:text-base xl:text-lg">
               General Admission @ $15.00
             </td>
             <td className="border border-black text-center">

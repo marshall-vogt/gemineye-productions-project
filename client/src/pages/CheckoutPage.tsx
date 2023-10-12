@@ -1,3 +1,7 @@
 export default function CheckoutPage() {
-  return <div>Purchase completed! Go to 'MY TICKETS' to view purchases.</div>;
+  return (
+    <div className="text-white text-center mt-10">
+      Purchase completed! Go to 'MY TICKETS' page to view purchases.
+    </div>
+  );
 }

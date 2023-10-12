@@ -17,7 +17,7 @@ export default function EventPageEvents({ event }: Props) {
         <div>{locationAddress}</div>
         <div>
           <Link to={`${eventId}`}>
-            <button className="bg-[#2A2438] p-3 border rounded-lg">
+            <button className="bg-[#2A2438] p-3 border rounded-lg mt-3">
               Tickets
             </button>
           </Link>

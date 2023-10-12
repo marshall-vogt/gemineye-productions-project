@@ -20,7 +20,7 @@ export default function Details({ locationAddress, locationName }: Props) {
         <div className="text-base sm:text-lg md:text-xl 2xl:text-2xl">
           {locationName}
         </div>
-        <div>{locationAddress}</div>
+        <div className="text-center">{locationAddress}</div>
       </div>
     </div>
   );
