@@ -10,16 +10,18 @@ export default function HomePageEvents({ event }: Props) {
   const newDate = new Date(date).toDateString();
   return (
     <li>
-      <div className="flex w-full h-[5vh] justify-around items-center mt-5 bg-[#352f44] mr-2">
-        <div className="w-1/5 flex justify-center">{newDate}</div>
+      <div className="flex w-full sm:h-[5vh] h-[7vh] justify-around items-center mt-5 bg-[#352f44] mr-2 text-xs md:text-sm 2xl:text-lg">
+        <div className="w-1/5 text-center">{newDate}</div>
         <div className="w-1/4 flex justify-center">{title}</div>
         <div className="w-1/4 flex flex-col items-center">
           <div>{locationName}</div>
-          <div>{locationAddress}</div>
+          <div className="text-center">{locationAddress}</div>
         </div>
         <div className="border rounded-md">
           <Link to={`events/${eventId}`}>
-            <button className="p-3 flex justify-center">Tickets</button>
+            <button className="p-3 flex justify-center items-center h-[4vh]">
+              Tickets
+            </button>
           </Link>
         </div>
       </div>

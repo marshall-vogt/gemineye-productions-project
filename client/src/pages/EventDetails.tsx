@@ -104,16 +104,16 @@ export default function EventDetails() {
       <div className="flex justify-center m-5">
         <img src={`${eventFlyer}`} alt="event flyer" className="w-[50vw]" />
       </div>
-      <div className="bg-[#411e8f] w-[70vw] flex flex-col items-center justify-around text-white">
+      <div className="bg-[#411e8f] w-[90vw] flex flex-col items-center justify-around text-white">
         {scope !== 'checkout' && (
           <>
-            <div className="mt-10 text-2xl">GEMINEYE presents</div>
-            <div className="text-xl">
+            <div className="mt-10 text-lg sm:text-xl">GEMINEYE presents</div>
+            <div className="text-lg sm:text-2xl">
               {title} at {locationName}
             </div>
-            <div>{newDate}</div>
+            <div className="text-base sm:text-lg">{newDate}</div>
             <div>
-              <div className="flex">
+              <div className="flex text-sm sm:text-base md:text-lg 2xl:text-xl mt-3">
                 <button onClick={handleTicketClick} className={ticketStyle}>
                   Tickets
                 </button>
@@ -126,6 +126,7 @@ export default function EventDetails() {
                   <Tickets
                     setQuantity={setQuantity}
                     handlePurchase={handlePurchase}
+                    cost={cost}
                   />
                 )}
                 {scope === 'details' && (
