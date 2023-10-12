@@ -37,7 +37,7 @@ export default function AudioPlayer() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-full">
+    <div className="flex flex-col justify-center items-center h-[8vh] sm:h-full sm:mr-5 bg-[#8368a6] rounded-md">
       <DisplayTrack displayTrackProps={displayTrackProps} />
       <Controls controlsProps={controlsProps} />
       <ProgressBar progressBarProps={progressBarProps} />

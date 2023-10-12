@@ -111,7 +111,7 @@ export default function UserTickets() {
           </>
         )}
       </div>
-      <div className="h-[11vh]"></div>
+      <div className="h-[18vh]"></div>
     </>
   );
 }

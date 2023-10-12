@@ -22,7 +22,7 @@ export default function HomePage({ upcomingEvents }: Props) {
           </ul>
         </div>
       </div>
-      <div className="h-[11vh]"></div>
+      <div className="h-[18vh]"></div>
     </div>
   );
 }

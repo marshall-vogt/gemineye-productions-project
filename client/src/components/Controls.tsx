@@ -74,9 +74,9 @@ export default function Controls({ controlsProps }: Props) {
   }, [volume, audioRef, muteVolume]);
 
   return (
-    <div className="flex flex-col justify-center items-center w-[20vw]">
+    <div className="flex flex-col justify-center items-center text-sm w-full">
       <div
-        className="w-[10vw] flex justify-between mb-2"
+        className="w-[70%] flex justify-between text-md mb-2"
         style={{ display: 'flex' }}>
         <button onClick={handlePrevious}>
           <IoPlaySkipBackSharp />
@@ -95,7 +95,7 @@ export default function Controls({ controlsProps }: Props) {
           <IoPlaySkipForwardSharp />
         </button>
       </div>
-      <div className="mb-1">
+      <div className="hidden md:block text-md w-[90%] text-center">
         <button onClick={() => setMuteVolume(!muteVolume)}>
           {muteVolume || volume < 5 ? (
             <IoMdVolumeOff />
@@ -111,7 +111,6 @@ export default function Controls({ controlsProps }: Props) {
           max={100}
           value={volume}
           onChange={(e) => setVolume(Number(e.target.value))}
-          className=""
         />
       </div>
     </div>

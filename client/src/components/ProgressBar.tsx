@@ -25,14 +25,14 @@ export default function ProgressBar({ progressBarProps }: Props) {
     return '00:00';
   };
   return (
-    <div className="w-[20vw] flex justify-around">
+    <div className="w-[90%] min-w-min flex justify-around text-sm">
       <span>{formatTime(timeProgress)}</span>
       <input
         type="range"
         ref={progressBarRef}
         defaultValue="0"
         onChange={handleProgessChange}
-        className="w-[10vw]"
+        className="w-[50%]"
       />
       <span>{formatTime(duration)}</span>
     </div>

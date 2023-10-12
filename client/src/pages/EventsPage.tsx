@@ -15,7 +15,7 @@ export default function EventsPage({ upcomingEvents }: Props) {
             <EventPageEvents key={event.eventId} event={event} />
           ))}
       </div>
-      <div className="h-[11vh]"></div>
+      <div className="h-[18vh]"></div>
     </div>
   );
 }
