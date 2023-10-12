@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import AppContext from '../components/AppContext';
 import { fetchTickets } from '../lib/data';
 import UniqueQrCode from '../components/UniqueQrCode';
+import { useWindowSize } from '@uidotdev/usehooks';
 
 export type Ticket = {
   cost: number;
@@ -23,6 +24,18 @@ export default function UserTickets() {
   const [error, setError] = useState<unknown>();
   const [isLoading, setIsLoading] = useState(true);
   const userId = user?.userId;
+  const size = useWindowSize();
+  const width = size.width;
+  const resize = (width: number) => {
+    if (width < 380) return 50;
+    if (width < 640) return 75;
+    if (width < 768) return 100;
+    if (width < 1024) return 150;
+    if (width < 1280) return 200;
+    if (width < 1536) return 250;
+    return 300;
+  };
+  const qrSize = resize(width as number);
 
   useEffect(() => {
     async function loadTickets(id: number) {
@@ -63,7 +76,7 @@ export default function UserTickets() {
           {e.locationAddress}
         </div>
         <div className="flex justify-center items-center">
-          <UniqueQrCode code={e.hashedCode} />
+          <UniqueQrCode code={e.hashedCode} index={i} size={qrSize} />
         </div>
       </>
     );
@@ -77,11 +90,11 @@ export default function UserTickets() {
         ) : (
           <>
             <div className="text-center text-2xl m-5">My Tickets</div>
-            <div className="grid grid-cols-5">
+            <div className="grid grid-cols-5 text-xs sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl">
               <div className="border w-[20vw] flex justify-center items-center">
                 Event
               </div>
-              <div className="border w-[20vw] flex justify-center items-center">
+              <div className="border w-[20vw] flex justify-center items-center text-center">
                 Ticket Number
               </div>
               <div className="border w-[20vw] flex justify-center items-center">
@@ -90,7 +103,7 @@ export default function UserTickets() {
               <div className="border w-[20vw] flex justify-center items-center">
                 Location
               </div>
-              <div className="border w-[20vw] flex justify-center items-center">
+              <div className="border w-[20vw] flex justify-center items-center text-center">
                 QR Code
               </div>
               <>{renderTickets}</>
