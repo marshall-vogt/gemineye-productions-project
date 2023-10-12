@@ -1,5 +1,11 @@
 import QrCode from './QrCode';
 
-export default function UniqueQrCode({ code }: { code: string }) {
-  return QrCode(code);
+type Props = {
+  code: string;
+  index: number;
+  size: number;
+};
+
+export default function UniqueQrCode({ code, index, size }: Props) {
+  return QrCode(code, index, size);
 }
