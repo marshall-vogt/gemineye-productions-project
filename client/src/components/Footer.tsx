@@ -3,7 +3,7 @@ import AudioPlayer from './AudioPlayer';
 export default function Footer() {
   return (
     <>
-      <div className="w-full sm:hidden flex justify-center">
+      <div className="w-full sm:hidden flex justify-center text-white">
         <div>
           <AudioPlayer />
         </div>
