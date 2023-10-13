@@ -86,7 +86,9 @@ export default function UserTickets() {
     <>
       <div className="text-white">
         {ticketsPurchased.length === 0 ? (
-          <div>No tickets purchased</div>
+          <div className="text-center text-sm sm:text-md md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl mt-[3vh]">
+            No tickets purchased
+          </div>
         ) : (
           <>
             <div className="text-center text-2xl m-5">My Tickets</div>
