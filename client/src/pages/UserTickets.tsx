@@ -64,13 +64,13 @@ export default function UserTickets() {
   const renderTickets = ticketsPurchased.map((e, i) => {
     const newDate = new Date(e.date).toDateString();
     return (
-      <>
+      <div key={i} className="grid grid-cols-5">
         <div className="flex justify-center items-center mb-4 mt-4">
           <img src={e.eventFlyer} className="" />
         </div>
         <div className="flex justify-center items-center">{i + 1}</div>
         <div className="flex justify-center items-center">{newDate}</div>
-        <div className="flex justify-center items-center text-center">
+        <div className="flex justify-center items-center text-center w-[20vw]">
           {e.locationName}
           <br />
           {e.locationAddress}
@@ -78,7 +78,7 @@ export default function UserTickets() {
         <div className="flex justify-center items-center">
           <UniqueQrCode code={e.hashedCode} index={i} size={qrSize} />
         </div>
-      </>
+      </div>
     );
   });
 
@@ -106,8 +106,8 @@ export default function UserTickets() {
               <div className="border w-[20vw] flex justify-center items-center text-center">
                 QR Code
               </div>
-              <>{renderTickets}</>
             </div>
+            <>{renderTickets}</>
           </>
         )}
       </div>

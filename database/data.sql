@@ -3,16 +3,19 @@
 
 -- EXAMPLE:
 
-  insert into "users"
-    ("email", "phoneNumber", "username")
-    values
-      ('example@gmail.com', '555-555-5555', 'vogt_marshall');
+ -- insert into "users"
+ --   ("email", "phoneNumber", "username", "password")
+ --   values
+ --     ('example@gmail.com', '555-555-5555', 'marshall', );
 
   insert into "events" ("title", "locationName", "locationAddress", "date", "eventFlyer", "cost")
-      values ('Groove Garden', '701 Nightclub', '123 Main St., Santa Ana, Ca', '2023-10-14', '/images/flyer1.jpg', '15');
+      values ('Groove Garden', '701 Nightclub', '100 Main St., Santa Ana, Ca', '2023-10-15', '/images/flyer2.jpg', '15');
 
   insert into "events" ("title", "locationName", "locationAddress", "date", "eventFlyer", "cost")
-      values ('New Event', 'Mission Bar', '456 Main St., Santa Ana, Ca', '2023-10-21', '/images/flyer1.jpg', '15');
+      values ('Sonido', 'Mission Bar', '302 Main St., Santa Ana, Ca', '2023-10-22', '/images/flyer1.jpg', '15');
 
-  insert into "artists" ("name")
-      values ('melloMarsh');
+  insert into "events" ("title", "locationName", "locationAddress", "date", "eventFlyer", "cost")
+      values ('Spooky Grooves', '701 Nightclub', '100 Main St., Santa Ana, Ca', '2023-10-29', '/images/flyer1.jpg', '15');
+
+ -- insert into "artists" ("name")
+ --     values ('melloMarsh');
