@@ -27,7 +27,7 @@ export default function Checkout({ checkoutProps }: Props) {
     userId,
     setScope,
   } = checkoutProps;
-  const { date, title, locationName } = event;
+  const { date, title, locationName, cost } = event;
   const newDate = new Date(date).toDateString();
   const grandTotal = (subtotal + 0.08 * subtotal).toFixed(2);
   return (
@@ -56,7 +56,7 @@ export default function Checkout({ checkoutProps }: Props) {
           <tr>
             <td className="border border-black text-center">{quantity}</td>
             <td className="border border-black text-center text-xs sm:text-sm md:text-base xl:text-lg">
-              General Admission @ $15.00
+              General Admission @ ${cost.toFixed(2)}
             </td>
             <td className="border border-black text-center">
               ${fixedSubtotal}
