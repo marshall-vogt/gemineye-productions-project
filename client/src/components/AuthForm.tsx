@@ -42,6 +42,13 @@ export default function AuthForm({ action, onSignIn }: Props) {
     }
   }
 
+  async function handleGuestLogin() {
+    const auth = await signIn('guest', 'guest');
+    if (auth.user && auth.token) {
+      onSignIn(auth);
+    }
+  }
+
   const alternateActionTo = action === 'sign-up' ? '/sign-in' : '/sign-up';
   const alternateActionText =
     action === 'sign-up' ? 'Sign in instead' : 'Register now';
@@ -81,6 +88,11 @@ export default function AuthForm({ action, onSignIn }: Props) {
         <small>
           <Link to={alternateActionTo}>{alternateActionText}</Link>
         </small>
+        {action === 'sign-in' && (
+          <small>
+            <button onClick={handleGuestLogin}>Login as guest</button>
+          </small>
+        )}
       </div>
       <>
         {error && (

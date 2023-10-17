@@ -3,10 +3,10 @@
 
 -- EXAMPLE:
 
- -- insert into "users"
- --   ("email", "phoneNumber", "username", "password")
- --   values
- --     ('example@gmail.com', '555-555-5555', 'marshall', );
+  insert into "users"
+    ("username", "hashedPassword")
+    values
+      ('guest', '$argon2id$v=19$m=4096,t=3,p=1$T//QYcENPazrlTPeTqmD2A$bFFlNG0GZZFzOh3awD1ycZIjQrUDMKcuxXuilviT6Hk');
 
   insert into "events" ("title", "locationName", "locationAddress", "date", "eventFlyer", "cost")
       values ('Groove Garden', '701 Nightclub', '100 Main St., Santa Ana, Ca', '2023-10-15', '/images/flyer2.jpg', '15');
