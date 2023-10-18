@@ -16,6 +16,3 @@
 
   insert into "events" ("title", "locationName", "locationAddress", "date", "eventFlyer", "cost")
       values ('Spooky Grooves', '701 Nightclub', '100 Main St., Santa Ana, Ca', '2023-10-29', '/images/flyer1.jpg', '15');
-
- -- insert into "artists" ("name")
- --     values ('melloMarsh');
