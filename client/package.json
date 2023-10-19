@@ -15,6 +15,7 @@
     "@uidotdev/usehooks": "^2.4.0",
     "@vitejs/plugin-react": "^4.0.3",
     "autoprefixer": "^10.4.16",
+    "hamburger-react": "^2.5.0",
     "postcss": "^8.4.31",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
