@@ -26,7 +26,6 @@ export default function Controls({ controlsProps }: Props) {
   const {
     audioRef,
     progressBarRef,
-    // duration,
     setTimeProgress,
     setCurrentIndex,
     currentIndex,
